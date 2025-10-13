@@ -91,13 +91,11 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 
 **User Value**: Makes it effortless to show friends what you're willing to share
 
-**MVP Rules**:
+**Rules**:
 - Items default to "Available" status
 - Only the owner can edit/delete listings
-- When marked "Gifted," item is removed from feed (hard delete for MVP)
+- When marked "Gifted," item is hidden from feed but data is retained
 - Photos are optional but strongly encouraged
-- No categories in MVP (future enhancement)
-- No pickup location field (friends know each other)
 
 ### Feature 2: Friend Connections
 
@@ -112,11 +110,10 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 
 **User Value**: Creates a safe, trusted circle for sharing without exposure to strangers
 
-**MVP Rules**:
+**Rules**:
 - Connections must be mutual (both parties accept)
-- No public profiles - all visibility is friend-gated
+- All visibility is friend-gated
 - Users can only see items/wishes from accepted friends
-- No friend profile view in MVP (future enhancement)
 - Friends communicate outside the app to coordinate pickup
 
 ### Feature 3: Friend Item Browse/Discovery
@@ -131,12 +128,9 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 
 **User Value**: Instantly see what friends are offering, browse casually, discover unexpected items
 
-**MVP Rules**:
+**Rules**:
 - Only shows items marked "Available"
-- "Gifted" items don't appear in feed
 - Items from non-friends never appear
-- No search, filter, or sort in MVP (keep it simple)
-- No "I want this" button (friends coordinate outside app)
 
 ### Feature 4: Wish Lists (Needs/Wants)
 
@@ -149,13 +143,11 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 - Status: Open / Fulfilled
 - Date added
 
-**User Value**: Friends can see what you need and reach out if they have it (via external communication)
+**User Value**: Friends can see what you need and reach out if they have it
 
-**MVP Rules**:
-- When fulfilled, wish is removed from feed (hard delete for MVP)
-- No "I have this" button in MVP (friends coordinate outside app)
+**Rules**:
+- When marked as fulfilled, wish is hidden from feed but data is retained
 - Can mark wish as fulfilled even if received outside app
-- No categories in MVP
 
 ### Feature 5: Friend Wish Lists Discovery
 
@@ -169,11 +161,9 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 
 **User Value**: Discover ways to help friends
 
-**MVP Rules**:
+**Rules**:
 - Only shows active (unfulfilled) wishes
 - Can see all priority levels
-- No "I have this" button in MVP (friends reach out via external communication)
-- No search, filter, or sort in MVP
 
 ---
 
@@ -345,12 +335,12 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
     ↓
 [Tap "Confirm"]
     ↓
-[Item removed from feed and database]
+[Item hidden from feed]
     ↓
 [User returned to "My Items" page]
 ```
 
-**Success Criteria**: One-tap process to remove gifted items from circulation
+**Success Criteria**: One-tap process to mark items as gifted
 
 ---
 
@@ -420,12 +410,11 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 **Elements**:
 - Clean grid view of items (2 columns on mobile, more on tablet/desktop)
 - Each card: thumbnail photo, item name, friend's name
-- No top bar, no search, no filters (identified by highlighted bottom nav icon)
 - Infinite scroll or "Load more" pagination
-- Empty state: "No items yet. Add friends to see what they're sharing!"
+- Empty state: "Add friends to see what they're sharing!"
 
 **Notes**:
-- This is now the home screen (no separate dashboard)
+- This is the default home screen
 - Users know where they are by the highlighted bottom nav icon
 - Clean and simple - just items in a grid
 
@@ -468,12 +457,10 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 - Back button to return to feed
 - Photo carousel (swipe through multiple images)
 - Item title and condition
-- Friend's name (no profile picture in MVP)
+- Friend's name
 - Time since listed
 - Full description
 - Helper text explaining to coordinate outside app
-- NO action buttons ("I want this", "Share", etc.)
-- NO menu options (report, hide)
 
 ### 3. My Items (Inventory)
 **Purpose**: Manage your own item listings
@@ -509,12 +496,11 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 ```
 
 **Elements**:
-- Simple list view of your items (no tabs, only showing available items)
+- Simple list view of your items
 - Each item shows: photo, title, days since listed, status
-- NO view count
 - Quick actions: Edit, Mark as Gifted
 - Prominent "Add Item" button in top right
-- When "Mark as Gifted" is tapped, item is deleted (not moved to history)
+- When "Mark as Gifted" is tapped, item is hidden from feed
 
 ### 4. Add/Edit Item Form
 **Purpose**: Create or modify an item listing
@@ -551,8 +537,6 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 - Photo upload area (up to 6 photos, optional)
 - Required fields: item name, description
 - Optional: condition selector
-- NO pickup location field
-- NO category selector
 - Character limits shown (e.g., "50/200 characters")
 - Save button (disabled until required fields filled)
 - Cancel option with "discard changes?" confirmation
@@ -594,10 +578,7 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 - Simple list view of wishes (chronological, newest first)
 - Color-coded priority indicators
 - Each card: priority level, item name, friend, date, description
-- NO "I Have This" button (friends coordinate outside app)
-- NO filters or search
-- NO top bar (identified by highlighted bottom nav)
-- Empty state: "None of your friends have active wishes right now"
+- Empty state: "Your friends haven't added any wishes yet"
 
 ### 6. My Wishes
 **Purpose**: Manage your own wish list
@@ -631,12 +612,11 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 ```
 
 **Elements**:
-- Simple list of active wishes (no tabs)
+- Simple list of active wishes
 - Each wish shows: priority indicator, title, description, date added
-- NO view count
 - Quick actions: Edit, Mark Fulfilled
 - "Add Wish" button
-- When "Mark Fulfilled" is tapped, wish is deleted (not moved to history)
+- When "Mark Fulfilled" is tapped, wish is hidden from feed
 
 ### 7. Add/Edit Wish Form
 **Purpose**: Create or modify a wish
@@ -681,6 +661,13 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 ┌─────────────────────────────────────┐
 │ Friends                [+ Add Friend]│
 │                                      │
+│ Pending Requests (1)                 │
+│ ┌─────────────────────────────────┐ │
+│ │ Jordan Smith                    │ │
+│ │ [Accept] [Decline]              │ │
+│ └─────────────────────────────────┘ │
+│                                      │
+│ ──────────────────────────────────  │
 │ My Friends (12)                      │
 │                                      │
 │ ┌─────────────────────────────────┐ │
@@ -698,25 +685,15 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 │ │ 7 items · 4 wishes              │ │
 │ └─────────────────────────────────┘ │
 │                                      │
-│ ──────────────────────────────────  │
-│ Pending Requests (1)                 │
-│                                      │
-│ ┌─────────────────────────────────┐ │
-│ │ Jordan Smith                    │ │
-│ │ [Accept] [Decline]              │ │
-│ └─────────────────────────────────┘ │
-│                                      │
 └─────────────────────────────────────┘
 │ [Items] [Wishes] [Friends] [Me]    │
 └─────────────────────────────────────┘
 ```
 
 **Elements**:
-- Simple list of connected friends
+- Pending requests section at top
+- Simple list of connected friends below
 - Each entry shows: name, item count, wish count
-- NO profile picture
-- NO "View Profile" button (no friend profile view in MVP)
-- Pending requests section below friends list
 - "Add Friend" button
 - Alphabetical sorting
 - Tap friend name to see options (Unfriend)
@@ -797,7 +774,6 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 ```
 
 **Elements**:
-- NO profile photo (removed for MVP)
 - Name, username, email (editable)
 - Settings sections (basic configurations)
 - Logout button
@@ -874,7 +850,7 @@ User A                    System                    User B
   │                         │ Mark as Gifted          │
   │                         │<────────────────────────┤
   │                         │                         │
-  │                         │ Delete item             │
+  │                         │ Hide item from feed     │
   │                         │                         │
   │ Item removed from feed  │                         │
   │<────────────────────────┤                         │
@@ -903,7 +879,7 @@ User A                    System                    User B
   │ Mark wish fulfilled     │                         │
   ├────────────────────────>│                         │
   │                         │                         │
-  │ Wish deleted            │                         │
+  │ Wish hidden from feed   │                         │
 ```
 
 ---
@@ -927,12 +903,12 @@ User A                    System                    User B
 
 ### 4. MVP Simplicity
 - **Principle**: Start simple, add features based on real usage
-- **Implementation**: No search, filters, messaging, or analytics in MVP
+- **Implementation**: Focus on core listing and browsing functionality
 - **User Benefit**: Easy to learn, fast to build, validates core concept
 
 ### 5. Trust-Based Coordination
 - **Principle**: Friends coordinate outside the app
-- **Implementation**: No in-app messaging or "I want this" buttons
+- **Implementation**: Simple discovery, external communication
 - **User Benefit**: Relies on existing trust and communication channels
 
 ### 6. Accessibility Everywhere
@@ -970,13 +946,12 @@ User A                    System                    User B
 - **Keyboard Navigation**: All actions accessible without mouse
 - **Font Sizing**: Respects system font preferences
 - **Reduced Motion**: Respects prefers-reduced-motion
-- **Offline Support**: Core features work without internet (future)
 
 ### Language & Tone
 - **Inclusive Language**: Avoid gendered terms, use "they/them"
 - **Positive Framing**: "Share" not "get rid of", "receive" not "take"
 - **Clear Instructions**: No jargon, simple explanations
-- **Multilingual Support (future)**: i18n-ready from day one
+- **Multilingual Support**: i18n-ready from day one
 
 ### Economic Inclusivity
 - **No Paywalls**: All features free forever
@@ -1005,11 +980,8 @@ User A                    System                    User B
 - **Delete Account**: Full data deletion on request
 - **Unfriend**: Remove friend connections anytime
 - **Privacy Settings**: Control who can send friend requests
-- **Data Export**: Download all your data anytime (future)
 
-### Content Moderation (Future)
-- User reports (post-MVP)
-- Admin review process (post-MVP)
+### Content Moderation
 - Community guidelines
 - Banned items list (weapons, illegal items, etc.)
 
@@ -1041,33 +1013,19 @@ User A                    System                    User B
 
 ## MVP Scope Summary
 
-### What's IN the MVP:
+### What's in the MVP:
 ✅ List items with photos and descriptions
 ✅ Browse friends' available items
 ✅ Create wishes with priority levels
 ✅ Browse friends' wishes
 ✅ Connect with friends (search by username/email)
-✅ Mark items as gifted (simple deletion)
-✅ Mark wishes as fulfilled (simple deletion)
+✅ Mark items as gifted (hidden from feed, data retained)
+✅ Mark wishes as fulfilled (hidden from feed, data retained)
 ✅ Landing page for first-time visitors
 ✅ Basic profile management (name, username, email)
 ✅ Friend-only privacy
 
-### What's NOT in the MVP (See FUTURE_FEATURES.md):
-❌ Search and filter functionality
-❌ Sort options
-❌ In-app messaging or interest notifications
-❌ "I want this" / "I have this" buttons
-❌ Pickup location field
-❌ Share functionality
-❌ Friend profile views
-❌ Gift history tracking
-❌ Profile photos
-❌ View counts
-❌ Report/moderation tools
-❌ Categories and tags
-❌ Home dashboard with activity feed
-❌ Advanced notifications
+For additional features planned post-MVP, see FUTURE_FEATURES.md
 
 ---
 
