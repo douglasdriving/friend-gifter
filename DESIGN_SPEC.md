@@ -1,10 +1,12 @@
-# Friend Gifting App - Design Specification
+# Friend Gifting App - MVP Design Specification
 
 ## Executive Summary
 
 The Friend Gifting App is a sharing economy platform designed to reduce waste and strengthen community bonds by enabling friends to easily share unused items. Rather than letting products gather dust or purchasing new items unnecessarily, users can browse what their friends have available, list items they're willing to give away, and express their needs—creating a circular economy within their social circle.
 
 **Vision**: To create a sustainable, community-driven alternative to consumer culture where friends naturally share resources, reduce waste, and strengthen relationships through generosity.
+
+**MVP Focus**: This specification focuses on the core features needed to validate the concept and enable friends to share items with minimal friction. Advanced features like messaging, filtering, and analytics are documented separately in FUTURE_FEATURES.md.
 
 ---
 
@@ -30,6 +32,7 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 
 ### 1. The Generous Declutterer (Emma)
 **Age**: 32 | **Occupation**: Teacher
+
 **Goals**:
 - Clear out unused items without waste
 - Help friends while decluttering
@@ -43,6 +46,7 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 
 ### 2. The Resourceful Seeker (Marcus)
 **Age**: 27 | **Occupation**: Freelance Designer
+
 **Goals**:
 - Find items they need without buying new
 - Save money while being sustainable
@@ -56,6 +60,7 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 
 ### 3. The Community Builder (Aisha)
 **Age**: 35 | **Occupation**: Community Organizer
+
 **Goals**:
 - Strengthen friend network
 - Promote sustainable living
@@ -69,357 +74,328 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 
 ---
 
-## Core Features
+## Core MVP Features
 
 ### Feature 1: Item Listings (Available Items)
 
 **Description**: Users can create listings for items they're willing to give away to friends.
 
 **Key Elements**:
-- Item name/title
-- Description (condition, why giving away, etc.)
-- Category (to be added in future, but data structure should accommodate)
-- Photos (multiple images)
-- Status: Available / Promised / Gifted
-- Visibility: All friends / Friends of friends (future)
+- Item name/title (required)
+- Description (required)
+- Photos (optional but encouraged, up to 6)
+- Condition selector (Like New / Good / Fair)
+- Status: Available / Gifted
 - Date listed
-- Optional: pickup location notes
+- Owner information (name, profile)
 
 **User Value**: Makes it effortless to show friends what you're willing to share
 
-**Rules**:
+**MVP Rules**:
 - Items default to "Available" status
 - Only the owner can edit/delete listings
-- When marked "Gifted," item moves to history (not deleted, for record-keeping)
+- When marked "Gifted," item is removed from feed (hard delete for MVP)
 - Photos are optional but strongly encouraged
+- No categories in MVP (future enhancement)
+- No pickup location field (friends know each other)
 
 ### Feature 2: Friend Connections
 
 **Description**: Users can connect with friends to create a trusted network for sharing.
 
 **Key Elements**:
-- Send friend requests (via username, email, or in-app search)
+- Send friend requests (via username or email search)
 - Accept/decline friend requests
-- View friend list
+- View friend list with item/wish counts
 - Unfriend option
 - Privacy: only friends see your items and wish lists
 
 **User Value**: Creates a safe, trusted circle for sharing without exposure to strangers
 
-**Rules**:
+**MVP Rules**:
 - Connections must be mutual (both parties accept)
 - No public profiles - all visibility is friend-gated
 - Users can only see items/wishes from accepted friends
+- No friend profile view in MVP (future enhancement)
+- Friends communicate outside the app to coordinate pickup
 
 ### Feature 3: Friend Item Browse/Discovery
 
 **Description**: The main discovery interface where users see what their friends have available.
 
 **Key Elements**:
-- Feed/grid view of all friends' available items
-- Filter by friend
-- Search functionality
-- Sort options (newest first, friend name, etc.)
-- Quick view of item details
-- Direct messaging to coordinate pickup (future)
+- Simple grid view of all friends' available items
+- Each card shows: photo, item name, friend's name
+- Tap to view full item details
+- Chronological order (newest first)
 
 **User Value**: Instantly see what friends are offering, browse casually, discover unexpected items
 
-**Rules**:
+**MVP Rules**:
 - Only shows items marked "Available"
 - "Gifted" items don't appear in feed
 - Items from non-friends never appear
+- No search, filter, or sort in MVP (keep it simple)
+- No "I want this" button (friends coordinate outside app)
 
 ### Feature 4: Wish Lists (Needs/Wants)
 
 **Description**: Users can list items they're looking for, making their needs visible to friends.
 
 **Key Elements**:
-- Item name/description
+- Item name/title (required)
+- Description with details/preferences (required)
 - Priority level (Need now / Would like / Someday)
-- Category (future)
 - Status: Open / Fulfilled
 - Date added
-- Optional: specific details/preferences
 
-**User Value**: Friends can proactively offer items, removes awkwardness of asking
+**User Value**: Friends can see what you need and reach out if they have it (via external communication)
 
-**Rules**:
-- When fulfilled, wish moves to history (similar to gifted items)
-- Friends receive notifications when you add high-priority wishes (future)
+**MVP Rules**:
+- When fulfilled, wish is removed from feed (hard delete for MVP)
+- No "I have this" button in MVP (friends coordinate outside app)
 - Can mark wish as fulfilled even if received outside app
+- No categories in MVP
 
 ### Feature 5: Friend Wish Lists Discovery
 
 **Description**: View what your friends are looking for to see if you can help.
 
 **Key Elements**:
-- Feed of friends' wishes
-- Filter by friend
-- Filter by priority
-- "I have this" button to offer item
-- Search across all friend wishes
+- Simple list view of friends' wishes
+- Color-coded priority indicators
+- Each card shows: priority, item name, friend's name, date, description
+- Chronological order (newest first)
 
-**User Value**: Discover ways to help friends, feel good about giving
+**User Value**: Discover ways to help friends
 
-**Rules**:
+**MVP Rules**:
 - Only shows active (unfulfilled) wishes
 - Can see all priority levels
-- When you "offer" an item, friend gets notification
-
-### Feature 6: Gift History
-
-**Description**: Personal archive of giving and receiving activity.
-
-**Key Elements**:
-- Items you've given away (who received them, when)
-- Items you've received (who gave them, when)
-- Wishes you've fulfilled
-- Timeline view
-- Stats: total items shared, friends helped, etc.
-
-**User Value**: Creates sense of community impact, warm feelings of generosity, gratitude reminders
-
-**Rules**:
-- History is private to each user
-- Can add notes/memories to past gifts
-- No deletion, only archiving
+- No "I have this" button in MVP (friends reach out via external communication)
+- No search, filter, or sort in MVP
 
 ---
 
 ## User Flows
 
-### Flow 1: Listing an Item to Give Away
+### Flow 1: First-Time User Experience
+
+```
+[User visits app URL]
+    ↓
+[Landing Page]
+  - App name and tagline
+  - Brief description (1-2 sentences)
+  - "Get Started" button
+    ↓
+[Tap "Get Started"]
+    ↓
+[Sign Up / Log In screen]
+    ↓
+[Create account or log in]
+    ↓
+[Lands on Available Items feed]
+  (Empty state with prompt to add friends)
+```
+
+**Success Criteria**: User understands what the app is within 10 seconds of landing
+
+### Flow 2: Listing an Item to Give Away
 
 ```
 [User has unused item]
     ↓
-[Opens app] → [Navigate to "My Items"]
+[From bottom nav, tap "My Items"]
     ↓
 [Tap "Add Item" button]
     ↓
 [Fill in item details]:
-  - Take/upload photos
-  - Add title
-  - Write description
-  - (Future: select category)
+  - Take/upload photos (optional)
+  - Add title (required)
+  - Write description (required)
+  - Select condition (optional)
     ↓
-[Preview listing]
+[Tap "Save"]
     ↓
-[Tap "Post Item"]
+[Item appears in friends' "Available Items" feed]
     ↓
-[Item appears in friends' feeds]
-    ↓
-[Receive notifications when friends show interest]
+[User returned to "My Items" page]
 ```
 
 **Success Criteria**: Item is live and visible to friends within 2 minutes of user deciding to list it
 
-### Flow 2: Browsing Friends' Items
+### Flow 3: Browsing Friends' Items
 
 ```
 [User opens app]
     ↓
 [Lands on "Available Items" feed]
-  - Sees grid/list of friends' items
+  - Sees grid of friends' items
   - Each item shows: photo, title, friend's name
     ↓
-[User scrolls or searches]
+[User scrolls through items]
     ↓
 [Spots interesting item]
     ↓
 [Taps to view details]
   - Full description
   - All photos
+  - Condition
   - Friend's name
   - Date listed
-  - "I want this" button
     ↓
-[User taps "I want this"]
+[User contacts friend outside app]
+  (via text, phone, etc.)
     ↓
-[Confirmation screen]:
-  "Let [Friend] know you're interested?"
+[They coordinate pickup]
     ↓
-[Tap "Yes, contact them"]
-    ↓
-[Friend receives notification]
-    ↓
-[Users coordinate pickup]:
-  (Future: in-app messaging)
-  (MVP: exchange happens outside app)
+[After exchange complete]
     ↓
 [Item owner marks as "Gifted"]
     ↓
-[Item disappears from feed]
+[Simple confirmation dialog]
     ↓
-[Both users have record in History]
+[Item removed from feed]
 ```
 
-**Success Criteria**: Users can find and express interest in items within 30 seconds
+**Success Criteria**: Users can find and view item details within 30 seconds
 
-### Flow 3: Creating a Wish List Item
+### Flow 4: Creating a Wish List Item
 
 ```
 [User needs something]
     ↓
-[Opens app] → [Navigate to "My Wishes"]
+[From bottom nav, tap "My Wishes"]
     ↓
 [Tap "Add Wish" button]
     ↓
 [Fill in details]:
-  - Item name
-  - Description/specifics
-  - Set priority level
+  - Item name (required)
+  - Description/specifics (required)
+  - Set priority level (required)
     ↓
-[Tap "Add Wish"]
+[Tap "Save"]
     ↓
 [Wish appears in friends' "Friend Wishes" feed]
     ↓
-[Friend with matching item sees wish]
+[User returned to "My Wishes" page]
     ↓
-[Friend taps "I have this"]
+[Friend sees wish in their feed]
     ↓
-[User receives notification]:
-  "[Friend] has a [item] for you!"
+[Friend contacts user outside app if they have the item]
     ↓
-[User taps notification]
-    ↓
-[Views offer details]
-    ↓
-[Taps "Accept offer"]
-    ↓
-[Coordinate pickup]
+[They coordinate exchange]
     ↓
 [User marks wish as "Fulfilled"]
     ↓
-[Wish moves to history]
+[Wish removed from feed]
 ```
 
-**Success Criteria**: Friends can discover and offer items that match wishes within 24 hours
+**Success Criteria**: Friends can discover wishes and reach out via external communication
 
-### Flow 4: Connecting with a Friend
+### Flow 5: Connecting with a Friend
 
 ```
 [User wants to add friend]
     ↓
-[Navigate to "Friends" section]
+[From bottom nav, tap "Friends"]
     ↓
-[Tap "Add Friend"]
+[Tap "Add Friend" button]
     ↓
-[Search by]:
-  - Username
-  - Email address
-  - (Future: import contacts, QR code)
+[Search by username or email]
     ↓
-[Find friend's profile]
+[Find friend in results]
     ↓
 [Tap "Send Request"]
     ↓
-[Request sent notification]
+[Request sent notification shown]
     ↓
 ---[Friend's perspective]---
     ↓
-[Friend receives notification]
+[Friend sees pending request in "Friends" tab]
     ↓
-[Friend taps notification]
+[Friend taps to view request]
     ↓
-[Views request with accept/decline buttons]
-    ↓
-[Friend taps "Accept"]
+[Taps "Accept"]
     ↓
 ---[Both users]---
     ↓
 [Connection established]
     ↓
 [Can now see each other's items and wishes]
-    ↓
-[Welcome notification]:
-  "You're now connected with [Friend]!
-   Check out their available items."
 ```
 
 **Success Criteria**: Friend connection takes less than 1 minute from search to confirmation
 
-### Flow 5: Marking Item as Gifted
+### Flow 6: Marking Item as Gifted
 
 ```
 [User has given away item]
     ↓
-[Opens app] → [Navigate to "My Items"]
+[From bottom nav, tap "My Items"]
     ↓
-[Find the item in list]
-    ↓
-[Tap item to open]
+[Tap on the item]
     ↓
 [Tap "Mark as Gifted" button]
     ↓
-[Dialog appears]:
-  "Who received this item?"
-  [Dropdown of friends]
-  [Optional: add note]
+[Simple confirmation dialog]:
+  "Mark this item as gifted? It will be removed from your list."
+  [Cancel] [Confirm]
     ↓
-[Select friend and confirm]
+[Tap "Confirm"]
     ↓
-[Item status changes to "Gifted"]
+[Item removed from feed and database]
     ↓
-[Item moves to Gift History]
-    ↓
-[Disappears from friends' feeds]
-    ↓
-[Both users get history record]
+[User returned to "My Items" page]
 ```
 
-**Success Criteria**: Simple one-tap process to mark items as gifted and record the recipient
+**Success Criteria**: One-tap process to remove gifted items from circulation
 
 ---
 
 ## Views & Screens
 
-### 1. Home Dashboard
-**Purpose**: Main landing screen after login, quick overview of activity
+### 0. Landing Page (First-Time Visitors)
+**Purpose**: Explain the app to new visitors
 
 **Layout**:
 ```
 ┌─────────────────────────────────────┐
-│  [Profile icon]    Friend Gifting   │
 │                                      │
-├─────────────────────────────────────┤
 │                                      │
-│  📦 Available Items (12 new)        │
-│     [See what friends are sharing]  │
+│         🎁                           │
+│    Friend Gifting                    │
 │                                      │
-│  💭 Friend Wishes (5 new)           │
-│     [Help friends find what they    │
-│      need]                           │
+│  Share items with friends.           │
+│  Reduce waste. Build community.      │
 │                                      │
-│  Recent Activity                     │
-│  ┌──────────────────────────────┐  │
-│  │ 🎁 Sarah shared Bread Maker  │  │
-│  │ 💬 Marcus wants Camping Tent │  │
-│  │ ✨ You gifted Camera to Jo   │  │
-│  └──────────────────────────────┘  │
 │                                      │
-└─────────────────────────────────────┘
-│ [Items] [Wishes] [Friends] [Me]    │
+│     [Get Started]                    │
+│                                      │
+│                                      │
+│  Already have an account?            │
+│        [Log In]                      │
+│                                      │
 └─────────────────────────────────────┘
 ```
 
 **Elements**:
-- Quick stats with counts
-- Recent activity feed (last 10 items)
-- Bottom navigation bar
-- Top: user profile access and settings
+- App name and simple icon
+- One-sentence value proposition
+- Brief tagline (1-2 sentences max)
+- "Get Started" button (primary CTA)
+- "Log In" link for returning users
+- Clean, minimal design
+- Only shows for non-authenticated users
 
-### 2. Available Items Feed
-**Purpose**: Browse all items friends are giving away
+### 1. Available Items Feed (Default Landing Screen)
+**Purpose**: Browse all items friends are giving away - this is the main screen users see when opening the app
 
 **Layout**:
 ```
 ┌─────────────────────────────────────┐
-│ ← Available Items        [Search 🔍]│
 │                                      │
-│ Filter: [All Friends ▼] [Sort ⋮]   │
-├─────────────────────────────────────┤
 │ ┌─────────┐ ┌─────────┐            │
 │ │ [Photo] │ │ [Photo] │            │
 │ │  Bread  │ │ Camping │            │
@@ -429,31 +405,37 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 │                                      │
 │ ┌─────────┐ ┌─────────┐            │
 │ │ [Photo] │ │ [Photo] │            │
-│ │  Books  │ │ Desk    │            │
+│ │  Books  │ │  Desk   │            │
 │ │ (5 pcs) │ │  Lamp   │            │
 │ │ -Aisha  │ │ -Sarah  │            │
 │ └─────────┘ └─────────┘            │
 │                                      │
 │ [Load more...]                       │
+│                                      │
 └─────────────────────────────────────┘
 │ [Items] [Wishes] [Friends] [Me]    │
 └─────────────────────────────────────┘
 ```
 
 **Elements**:
-- Grid view of items (2 columns on mobile, more on tablet/desktop)
+- Clean grid view of items (2 columns on mobile, more on tablet/desktop)
 - Each card: thumbnail photo, item name, friend's name
-- Search bar (searches titles and descriptions)
-- Filters: by friend, by category (future)
-- Sort: newest, oldest, friend name
+- No top bar, no search, no filters (identified by highlighted bottom nav icon)
+- Infinite scroll or "Load more" pagination
+- Empty state: "No items yet. Add friends to see what they're sharing!"
 
-### 3. Item Detail View
+**Notes**:
+- This is now the home screen (no separate dashboard)
+- Users know where they are by the highlighted bottom nav icon
+- Clean and simple - just items in a grid
+
+### 2. Item Detail View
 **Purpose**: Full information about a specific item
 
 **Layout**:
 ```
 ┌─────────────────────────────────────┐
-│ ← Item Details              [⋮ Menu]│
+│ ← Item Details                       │
 │                                      │
 │ ┌─────────────────────────────────┐ │
 │ │                                 │ │
@@ -473,45 +455,51 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 │  12 settings, comes with manual."    │
 │                                      │
 │ Condition: Excellent                 │
-│ Pickup: Downtown area                │
 │                                      │
 │ ──────────────────────────────────  │
 │                                      │
-│     [I Want This] [Share]           │
+│  "Contact Emma outside the app to    │
+│   coordinate pickup if interested"   │
 │                                      │
 └─────────────────────────────────────┘
 ```
 
 **Elements**:
+- Back button to return to feed
 - Photo carousel (swipe through multiple images)
 - Item title and condition
-- Friend's name and profile picture
+- Friend's name (no profile picture in MVP)
 - Time since listed
 - Full description
-- Optional fields (pickup location, notes)
-- Action buttons: "I want this", "Share" (future)
-- Menu: Report, Hide (if inappropriate)
+- Helper text explaining to coordinate outside app
+- NO action buttons ("I want this", "Share", etc.)
+- NO menu options (report, hide)
 
-### 4. My Items (Inventory)
+### 3. My Items (Inventory)
 **Purpose**: Manage your own item listings
 
 **Layout**:
 ```
 ┌─────────────────────────────────────┐
-│ ← My Items             [+ Add Item] │
+│ My Items               [+ Add Item] │
 │                                      │
-│ [Available] [Gifted]                 │
+│ Your Items (3)                       │
 │                                      │
-│ Available (3)                        │
 │ ┌─────────────────────────────────┐ │
 │ │ [Photo] Yoga Mat · 3 days ago   │ │
-│ │ 👁 Viewed by 5 friends          │ │
+│ │ Available                       │ │
 │ │ [Edit] [Mark as Gifted]         │ │
 │ └─────────────────────────────────┘ │
 │                                      │
 │ ┌─────────────────────────────────┐ │
 │ │ [Photo] Guitar Picks · 1 week   │ │
-│ │ 👁 Viewed by 2 friends          │ │
+│ │ Available                       │ │
+│ │ [Edit] [Mark as Gifted]         │ │
+│ └─────────────────────────────────┘ │
+│                                      │
+│ ┌─────────────────────────────────┐ │
+│ │ [Photo] Books (5) · 2 weeks     │ │
+│ │ Available                       │ │
 │ │ [Edit] [Mark as Gifted]         │ │
 │ └─────────────────────────────────┘ │
 │                                      │
@@ -521,14 +509,14 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 ```
 
 **Elements**:
-- Tabs: Available / Gifted
-- List view of your items
-- Each item shows: photo, title, days since listed, view count
+- Simple list view of your items (no tabs, only showing available items)
+- Each item shows: photo, title, days since listed, status
+- NO view count
 - Quick actions: Edit, Mark as Gifted
-- Prominent "Add Item" button
-- Badge showing number of available items
+- Prominent "Add Item" button in top right
+- When "Mark as Gifted" is tapped, item is deleted (not moved to history)
 
-### 5. Add/Edit Item Form
+### 4. Add/Edit Item Form
 **Purpose**: Create or modify an item listing
 
 **Layout**:
@@ -536,7 +524,7 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 ┌─────────────────────────────────────┐
 │ ← Add Item               [Save ✓]   │
 │                                      │
-│ Photos (tap to add/remove)           │
+│ Photos (optional)                    │
 │ ┌────┐ ┌────┐ ┌────┐ ┌────┐        │
 │ │[+] │ │ 📷 │ │    │ │    │        │
 │ └────┘ └────┘ └────┘ └────┘        │
@@ -553,43 +541,34 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 │ │                                 │ │
 │ └─────────────────────────────────┘ │
 │                                      │
-│ Condition                            │
-│ ○ Like New  ● Good  ○ Fair          │
-│                                      │
-│ Pickup Location (optional)           │
-│ ┌─────────────────────────────────┐ │
-│ │ Downtown, can deliver locally   │ │
-│ └─────────────────────────────────┘ │
-│                                      │
-│ Category (coming soon)               │
+│ Condition (optional)                 │
+│ ○ Like New  ○ Good  ○ Fair          │
 │                                      │
 └─────────────────────────────────────┘
 ```
 
 **Elements**:
-- Photo upload area (up to 6 photos)
+- Photo upload area (up to 6 photos, optional)
 - Required fields: item name, description
-- Optional fields: condition selector, pickup notes
-- Character limits shown (e.g., "50/100 characters")
+- Optional: condition selector
+- NO pickup location field
+- NO category selector
+- Character limits shown (e.g., "50/200 characters")
 - Save button (disabled until required fields filled)
 - Cancel option with "discard changes?" confirmation
 
-### 6. Friend Wishes Feed
+### 5. Friend Wishes Feed
 **Purpose**: See what friends are looking for
 
 **Layout**:
 ```
 ┌─────────────────────────────────────┐
-│ ← Friend Wishes         [Search 🔍] │
 │                                      │
-│ Filter: [All Friends ▼] [Priority ▼]│
-├─────────────────────────────────────┤
 │ ┌─────────────────────────────────┐ │
 │ │ 🔴 NEED NOW                     │ │
 │ │ Camping Tent                    │ │
 │ │ Marcus · 1 day ago              │ │
 │ │ "For weekend trip, any size OK" │ │
-│ │          [I Have This →]        │ │
 │ └─────────────────────────────────┘ │
 │                                      │
 │ ┌─────────────────────────────────┐ │
@@ -597,7 +576,6 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 │ │ Standing Desk                   │ │
 │ │ Aisha · 3 days ago              │ │
 │ │ "Adjustable height preferred"   │ │
-│ │          [I Have This →]        │ │
 │ └─────────────────────────────────┘ │
 │                                      │
 │ ┌─────────────────────────────────┐ │
@@ -605,7 +583,6 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 │ │ Bike Rack for Car               │ │
 │ │ Emma · 1 week ago               │ │
 │ │ "For future road trips"         │ │
-│ │          [I Have This →]        │ │
 │ └─────────────────────────────────┘ │
 │                                      │
 └─────────────────────────────────────┘
@@ -614,30 +591,29 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 ```
 
 **Elements**:
-- List view of wishes (chronological or by priority)
+- Simple list view of wishes (chronological, newest first)
 - Color-coded priority indicators
 - Each card: priority level, item name, friend, date, description
-- "I Have This" button to offer
-- Filters: by friend, by priority level
-- Search functionality
+- NO "I Have This" button (friends coordinate outside app)
+- NO filters or search
+- NO top bar (identified by highlighted bottom nav)
+- Empty state: "None of your friends have active wishes right now"
 
-### 7. My Wishes
+### 6. My Wishes
 **Purpose**: Manage your own wish list
 
 **Layout**:
 ```
 ┌─────────────────────────────────────┐
-│ ← My Wishes            [+ Add Wish] │
+│ My Wishes              [+ Add Wish] │
 │                                      │
-│ [Active] [Fulfilled]                 │
+│ Your Wishes (2)                      │
 │                                      │
-│ Active (2)                           │
 │ ┌─────────────────────────────────┐ │
 │ │ 🔴 Camping Tent                 │ │
 │ │ Added 1 day ago                 │ │
 │ │ "For weekend trip, any size OK" │ │
 │ │                                 │ │
-│ │ ✨ 2 friends viewed this        │ │
 │ │ [Edit] [Mark Fulfilled]         │ │
 │ └─────────────────────────────────┘ │
 │                                      │
@@ -646,7 +622,6 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 │ │ Added 5 days ago                │ │
 │ │ "Adjustable height preferred"   │ │
 │ │                                 │ │
-│ │ ✨ 1 friend viewed this         │ │
 │ │ [Edit] [Mark Fulfilled]         │ │
 │ └─────────────────────────────────┘ │
 │                                      │
@@ -656,13 +631,14 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 ```
 
 **Elements**:
-- Tabs: Active / Fulfilled
-- List of wishes with priority indicators
-- View count (how many friends have seen it)
+- Simple list of active wishes (no tabs)
+- Each wish shows: priority indicator, title, description, date added
+- NO view count
 - Quick actions: Edit, Mark Fulfilled
 - "Add Wish" button
+- When "Mark Fulfilled" is tapped, wish is deleted (not moved to history)
 
-### 8. Add/Edit Wish Form
+### 7. Add/Edit Wish Form
 **Purpose**: Create or modify a wish
 
 **Layout**:
@@ -684,11 +660,8 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 │                                      │
 │ How urgent is this? *                │
 │ ○ Need now (within days)             │
-│ ● Would like (within weeks)          │
+│ ○ Would like (within weeks)          │
 │ ○ Someday (no rush)                  │
-│                                      │
-│ Category (coming soon)               │
-│                                      │
 │                                      │
 └─────────────────────────────────────┘
 ```
@@ -696,43 +669,41 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 **Elements**:
 - Required: item name, details, priority level
 - Clear priority level descriptions
-- Character limits
-- Save button
-- Cancel with confirmation
+- Character limits shown
+- Save button (disabled until required fields filled)
+- Cancel with confirmation if changes made
 
-### 9. Friends List
+### 8. Friends List
 **Purpose**: View and manage friend connections
 
 **Layout**:
 ```
 ┌─────────────────────────────────────┐
-│ ← Friends              [+ Add Friend]│
-│                                      │
-│ [Search friends...]                  │
+│ Friends                [+ Add Friend]│
 │                                      │
 │ My Friends (12)                      │
+│                                      │
 │ ┌─────────────────────────────────┐ │
-│ │ 👤 Emma Rodriguez              │ │
-│ │    3 items · 2 wishes           │ │
-│ │    [View Profile]               │ │
+│ │ Emma Rodriguez                  │ │
+│ │ 3 items · 2 wishes              │ │
 │ └─────────────────────────────────┘ │
 │                                      │
 │ ┌─────────────────────────────────┐ │
-│ │ 👤 Marcus Chen                 │ │
-│ │    0 items · 1 wish             │ │
-│ │    [View Profile]               │ │
+│ │ Marcus Chen                     │ │
+│ │ 0 items · 1 wish                │ │
 │ └─────────────────────────────────┘ │
 │                                      │
 │ ┌─────────────────────────────────┐ │
-│ │ 👤 Aisha Patel                 │ │
-│ │    7 items · 4 wishes           │ │
-│ │    [View Profile]               │ │
+│ │ Aisha Patel                     │ │
+│ │ 7 items · 4 wishes              │ │
 │ └─────────────────────────────────┘ │
 │                                      │
+│ ──────────────────────────────────  │
 │ Pending Requests (1)                 │
+│                                      │
 │ ┌─────────────────────────────────┐ │
-│ │ 👤 Jordan Smith                │ │
-│ │    [Accept] [Decline]           │ │
+│ │ Jordan Smith                    │ │
+│ │ [Accept] [Decline]              │ │
 │ └─────────────────────────────────┘ │
 │                                      │
 └─────────────────────────────────────┘
@@ -741,60 +712,60 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 ```
 
 **Elements**:
-- Search bar to find friends
-- List of connected friends with activity counts
-- Profile view button for each friend
-- Pending requests section
+- Simple list of connected friends
+- Each entry shows: name, item count, wish count
+- NO profile picture
+- NO "View Profile" button (no friend profile view in MVP)
+- Pending requests section below friends list
 - "Add Friend" button
 - Alphabetical sorting
+- Tap friend name to see options (Unfriend)
 
-### 10. Friend Profile View
-**Purpose**: See a specific friend's items and wishes
+### 9. Add Friend Search
+**Purpose**: Find and add friends
 
 **Layout**:
 ```
 ┌─────────────────────────────────────┐
-│ ← Emma Rodriguez           [⋮ Menu] │
+│ ← Add Friend                         │
 │                                      │
-│ 👤                                   │
-│ Emma Rodriguez                       │
-│ Friends since Jan 2024               │
+│ Search by username or email          │
+│ ┌─────────────────────────────────┐ │
+│ │ 🔍 emma@email.com               │ │
+│ └─────────────────────────────────┘ │
 │                                      │
-│ [Items (3)] [Wishes (2)]            │
-│ ─────────                            │
-│ Available Items                      │
-│ ┌─────────┐ ┌─────────┐            │
-│ │ [Photo] │ │ [Photo] │            │
-│ │  Bread  │ │  Yoga   │            │
-│ │  Maker  │ │   Mat   │            │
-│ └─────────┘ └─────────┘            │
+│ Results:                             │
 │                                      │
-│ ┌─────────┐                         │
-│ │ [Photo] │                         │
-│ │ Guitar  │                         │
-│ │  Picks  │                         │
-│ └─────────┘                         │
+│ ┌─────────────────────────────────┐ │
+│ │ Emma Rodriguez                  │ │
+│ │ @emmarodriguez                  │ │
+│ │ emma@email.com                  │ │
+│ │           [Send Request]        │ │
+│ └─────────────────────────────────┘ │
+│                                      │
+│ ┌─────────────────────────────────┐ │
+│ │ Emma Chen                       │ │
+│ │ @emmachen                       │ │
+│ │ emma.chen@email.com             │ │
+│ │           [Send Request]        │ │
+│ └─────────────────────────────────┘ │
 │                                      │
 └─────────────────────────────────────┘
 ```
 
 **Elements**:
-- Friend's name and profile picture
-- Connection date
-- Tabs: Items / Wishes
-- Grid of friend's available items or active wishes
-- Menu: Message (future), Unfriend, Report
+- Search field (username or email)
+- Results list showing matching users
+- "Send Request" button for each result
+- Shows if already friends or request pending
 
-### 11. Profile / Settings
+### 10. Profile / Settings
 **Purpose**: Manage your own profile and app settings
 
 **Layout**:
 ```
 ┌─────────────────────────────────────┐
-│ ← My Profile                         │
-│                                      │
-│      👤                              │
-│   [Edit Photo]                       │
+│ My Profile                           │
 │                                      │
 │ Your Name                            │
 │ ┌─────────────────────────────────┐ │
@@ -826,87 +797,40 @@ The Friend Gifting App is a sharing economy platform designed to reduce waste an
 ```
 
 **Elements**:
-- Profile photo upload
+- NO profile photo (removed for MVP)
 - Name, username, email (editable)
-- Settings sections
+- Settings sections (basic configurations)
 - Logout button
-
-### 12. Gift History
-**Purpose**: View past giving and receiving activity
-
-**Layout**:
-```
-┌─────────────────────────────────────┐
-│ ← Gift History                       │
-│                                      │
-│ [Given] [Received]                   │
-│                                      │
-│ Items You've Given (8)               │
-│                                      │
-│ ┌─────────────────────────────────┐ │
-│ │ 🎁 Bread Maker                  │ │
-│ │ Given to Emma · 2 days ago      │ │
-│ │ "She was so happy! Making bread │ │
-│ │  this weekend together."        │ │
-│ └─────────────────────────────────┘ │
-│                                      │
-│ ┌─────────────────────────────────┐ │
-│ │ 🎁 Camera Lens                  │ │
-│ │ Given to Marcus · 1 week ago    │ │
-│ └─────────────────────────────────┘ │
-│                                      │
-│ ┌─────────────────────────────────┐ │
-│ │ 🎁 Books (5)                    │ │
-│ │ Given to Aisha · 2 weeks ago    │ │
-│ └─────────────────────────────────┘ │
-│                                      │
-│ ──────────────────────────────────  │
-│ Your Impact                          │
-│ 8 items shared · 6 friends helped    │
-│                                      │
-└─────────────────────────────────────┘
-│ [Items] [Wishes] [Friends] [Me]    │
-└─────────────────────────────────────┘
-```
-
-**Elements**:
-- Tabs: Given / Received
-- Chronological list of past gifts
-- Each entry: item, friend, date
-- Optional: user-added notes/memories
-- Impact stats at bottom
-- Warm, celebratory tone
+- Clean, simple layout
 
 ---
 
 ## Information Architecture
 
 ```
-App Structure
+App Structure (MVP)
 │
-├── Home Dashboard
-│   └── Activity feed & quick stats
+├── Landing Page (unauthenticated only)
+│   └── App explanation & sign up/login
 │
-├── Items
-│   ├── Available Items Feed (browse friends' items)
-│   ├── Item Detail View
-│   ├── My Items (your inventory)
+├── Available Items Feed (default home screen)
+│   └── Item Detail View
+│
+├── My Items
 │   └── Add/Edit Item Form
 │
-├── Wishes
-│   ├── Friend Wishes Feed (browse friends' wishes)
-│   ├── My Wishes (your wish list)
+├── Friend Wishes Feed
+│   └── (Simple list, tap to view full description)
+│
+├── My Wishes
 │   └── Add/Edit Wish Form
 │
 ├── Friends
 │   ├── Friends List
-│   ├── Friend Profile View
-│   ├── Add Friend
-│   └── Friend Requests (pending)
+│   └── Add Friend Search
 │
-└── Me (Profile)
-    ├── My Profile (edit)
-    ├── Gift History (given/received)
+└── Profile (Me)
+    ├── Edit Profile
     ├── Settings
     │   ├── Notifications
     │   ├── Privacy
@@ -914,133 +838,19 @@ App Structure
     └── Log Out
 ```
 
----
-
-## System Architecture Diagram
-
-```
-┌─────────────────────────────────────────────────────────┐
-│                    USER LAYER                           │
-│  (Mobile browsers, Desktop browsers, Tablets)           │
-└────────────────────┬────────────────────────────────────┘
-                     │
-                     ▼
-┌─────────────────────────────────────────────────────────┐
-│              PROGRESSIVE WEB APP                        │
-│  ┌─────────────┐ ┌──────────────┐ ┌─────────────┐    │
-│  │   UI/UX     │ │ Offline Mode │ │  Image      │    │
-│  │ Components  │ │  (Service    │ │  Caching    │    │
-│  │             │ │   Worker)    │ │             │    │
-│  └─────────────┘ └──────────────┘ └─────────────┘    │
-└────────────────────┬────────────────────────────────────┘
-                     │
-                     ▼
-┌─────────────────────────────────────────────────────────┐
-│                  API LAYER                              │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐              │
-│  │  Auth    │ │  Items   │ │ Friends  │              │
-│  │  API     │ │  API     │ │  API     │              │
-│  └──────────┘ └──────────┘ └──────────┘              │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐              │
-│  │ Wishes   │ │ Notif.   │ │  Images  │              │
-│  │  API     │ │  API     │ │  API     │              │
-│  └──────────┘ └──────────┘ └──────────┘              │
-└────────────────────┬────────────────────────────────────┘
-                     │
-                     ▼
-┌─────────────────────────────────────────────────────────┐
-│                DATA & SECURITY LAYER                    │
-│  ┌──────────────────────┐  ┌──────────────────────┐   │
-│  │   Database           │  │   Image Storage      │   │
-│  │  - Users             │  │   (Encrypted)        │   │
-│  │  - Items             │  │                      │   │
-│  │  - Wishes            │  │                      │   │
-│  │  - Friendships       │  │                      │   │
-│  │  - Gift History      │  │                      │   │
-│  └──────────────────────┘  └──────────────────────┘   │
-│                                                         │
-│  ┌──────────────────────────────────────────────────┐ │
-│  │         PRIVACY & SECURITY CONTROLS              │ │
-│  │  - Friend-only visibility                        │ │
-│  │  - Encrypted data at rest                        │ │
-│  │  - Secure authentication                         │ │
-│  └──────────────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────┘
-```
-
----
-
-## Data Relationships Diagram
-
-```
-┌──────────────┐
-│    USER      │
-│              │
-│ - id         │
-│ - username   │
-│ - email      │
-│ - name       │
-│ - photo      │
-└──────┬───────┘
-       │
-       │ 1:N
-       │
-       ├──────────────────────┐
-       │                      │
-       ▼                      ▼
-┌──────────────┐      ┌──────────────┐
-│    ITEM      │      │     WISH     │
-│              │      │              │
-│ - id         │      │ - id         │
-│ - owner_id   │      │ - user_id    │
-│ - title      │      │ - title      │
-│ - description│      │ - description│
-│ - photos[]   │      │ - priority   │
-│ - status     │      │ - status     │
-│ - created_at │      │ - created_at │
-└──────┬───────┘      └──────────────┘
-       │
-       │ M:N (through GIFT_HISTORY)
-       │
-       ▼
-┌──────────────────┐
-│  GIFT_HISTORY    │
-│                  │
-│ - id             │
-│ - item_id        │
-│ - giver_id       │
-│ - receiver_id    │
-│ - gifted_at      │
-│ - note           │
-└──────────────────┘
-
-       USER
-        │
-        │ M:N (self-referencing)
-        │
-        ▼
-┌──────────────────┐
-│   FRIENDSHIP     │
-│                  │
-│ - id             │
-│ - user_id_1      │
-│ - user_id_2      │
-│ - status         │
-│ - created_at     │
-└──────────────────┘
-```
-
-**Relationship Rules**:
-- Users can have many Items and many Wishes (1:N)
-- Users connect to other Users through Friendships (M:N)
-- Items are transferred via Gift_History (M:N between Users and Items)
-- Privacy: Users can only query Items/Wishes where friendship exists
+**Navigation Notes**:
+- Bottom navigation bar with 4 items: Items, Wishes, Friends, Me
+- "Items" opens to "Available Items Feed" (friends' items)
+  - Has secondary access to "My Items" (from profile or separate nav)
+- "Wishes" opens to "Friend Wishes Feed" (friends' wishes)
+  - Has secondary access to "My Wishes" (from profile or separate nav)
+- Simple, flat structure for MVP
 
 ---
 
 ## Interaction Patterns
 
-### Pattern 1: Item Interest Flow
+### Pattern 1: Simplified Item Interest Flow
 ```
 User A                    System                    User B
   │                         │                         │
@@ -1050,61 +860,42 @@ User A                    System                    User B
   │ See User B's item       │                         │
   │<────────────────────────┤                         │
   │                         │                         │
-  │ Tap "I want this"       │                         │
+  │ View item details       │                         │
   ├────────────────────────>│                         │
   │                         │                         │
-  │                         │ Send notification       │
-  │                         ├────────────────────────>│
-  │                         │                         │
-  │                         │     "A wants your item" │
-  │                         │                         │
-  │ Confirmation shown      │                         │
-  │<────────────────────────┤                         │
+  │ Contact User B          │                         │
+  │ (via phone/text/etc)    │                         │
+  │──────────────────────────────────────────────────>│
   │                         │                         │
 
-  [Exchange happens offline/via external messaging]
+  [Exchange happens offline]
 
   │                         │                         │
   │                         │ Mark as Gifted          │
   │                         │<────────────────────────┤
   │                         │                         │
-  │ Receive confirmation    │                         │
-  │<────────────────────────┤                         │
+  │                         │ Delete item             │
   │                         │                         │
-  │ Added to history        │   Added to history      │
-  │<────────────────────────┼────────────────────────>│
+  │ Item removed from feed  │                         │
+  │<────────────────────────┤                         │
 ```
 
-### Pattern 2: Wish Fulfillment Flow
+### Pattern 2: Simplified Wish Fulfillment Flow
 ```
 User A                    System                    User B
   │                         │                         │
   │ Create wish             │                         │
   ├────────────────────────>│                         │
   │                         │                         │
-  │                         │ Notify friends          │
+  │                         │ Wish visible to friends │
   │                         ├────────────────────────>│
-  │                         │                         │
-  │                         │ "A is looking for X"    │
   │                         │                         │
   │                         │ Browse wishes           │
   │                         │<────────────────────────┤
   │                         │                         │
-  │                         │ Tap "I have this"       │
-  │                         │<────────────────────────┤
-  │                         │                         │
-  │ Receive notification    │                         │
-  │<────────────────────────┤                         │
-  │ "B has X for you!"      │                         │
-  │                         │                         │
-  │ View offer              │                         │
-  ├────────────────────────>│                         │
-  │                         │                         │
-  │ Accept offer            │                         │
-  ├────────────────────────>│                         │
-  │                         │                         │
-  │                         │ Notify acceptance       │
-  │                         ├────────────────────────>│
+  │ Contact User A          │                         │
+  │<──────────────────────────────────────────────────┤
+  │ (via phone/text/etc)    │                         │
   │                         │                         │
 
   [Exchange happens offline]
@@ -1112,8 +903,7 @@ User A                    System                    User B
   │ Mark wish fulfilled     │                         │
   ├────────────────────────>│                         │
   │                         │                         │
-  │ Moved to history        │   Added to history      │
-  │<────────────────────────┼────────────────────────>│
+  │ Wish deleted            │                         │
 ```
 
 ---
@@ -1135,19 +925,19 @@ User A                    System                    User B
 - **Implementation**: Wish lists are proactive, not reactive
 - **User Benefit**: Friends can help without awkward asking
 
-### 4. Gratitude & Connection
-- **Principle**: Emphasize relationships over transactions
-- **Implementation**: Gift history, impact stats, personal notes
-- **User Benefit**: Warmth, community feeling, motivation to continue
+### 4. MVP Simplicity
+- **Principle**: Start simple, add features based on real usage
+- **Implementation**: No search, filters, messaging, or analytics in MVP
+- **User Benefit**: Easy to learn, fast to build, validates core concept
 
-### 5. Progressive Disclosure
-- **Principle**: Show essentials first, details on demand
-- **Implementation**: Card views → detail views → actions
-- **User Benefit**: Quick browsing, low cognitive load
+### 5. Trust-Based Coordination
+- **Principle**: Friends coordinate outside the app
+- **Implementation**: No in-app messaging or "I want this" buttons
+- **User Benefit**: Relies on existing trust and communication channels
 
 ### 6. Accessibility Everywhere
 - **Principle**: Works on any device, any time
-- **Implementation**: Progressive Web App with offline support
+- **Implementation**: Progressive Web App
 - **User Benefit**: No app store barriers, works on old phones
 
 ---
@@ -1155,65 +945,20 @@ User A                    System                    User B
 ## Success Metrics
 
 ### Engagement Metrics
-- **Daily Active Users (DAU)**: % of users opening app daily
+- **Weekly Active Users (WAU)**: % of users opening app weekly
 - **Items Listed per User**: Average items each user shares
 - **Wishes Created per User**: Average wishes each user posts
 - **Friend Connections**: Average friend count per user
-- **Browsing Frequency**: How often users check Available Items
 
 ### Impact Metrics
-- **Gifts Completed**: Total items successfully shared
-- **Wish Fulfillment Rate**: % of wishes marked fulfilled
-- **Time to Gift**: Average days from listing to gifting
-- **Repeat Givers**: % of users who've gifted 3+ items
-- **Community Growth**: New users via friend invites
+- **Items Marked as Gifted**: Total items successfully shared
+- **Wishes Marked as Fulfilled**: Total wishes fulfilled
+- **Time to Gift**: Average days from listing to marking as gifted
 
 ### Quality Metrics
-- **Response Time**: How quickly friends respond to "I want this"
-- **Listing Quality**: % of items with photos and descriptions
-- **Completion Rate**: % of interested items that result in gifts
-- **User Satisfaction**: NPS score, qualitative feedback
-
----
-
-## Future Features & Roadmap
-
-### Phase 2: Enhanced Discovery
-- **Categories & Tags**: Organize items (Clothing, Books, Electronics, etc.)
-- **Advanced Filters**: Search by category, condition, distance
-- **Smart Matching**: "You might want this" based on wish lists
-- **Trending Items**: What friends are sharing most
-
-### Phase 3: Communication & Coordination
-- **In-App Messaging**: Discuss items without leaving app
-- **Pickup Scheduling**: Calendar integration for coordination
-- **Photo Messaging**: Send condition updates, location photos
-- **Group Chats**: Coordinate multi-person gifts/trades
-
-### Phase 4: Extended Networks
-- **Friends of Friends**: Opt-in to see extended network's items
-- **Circles**: Organize friends into groups (Work, School, Neighbors)
-- **Community Boards**: Join local sharing communities
-- **Verified Accounts**: Safety badges for trusted users
-
-### Phase 5: Location & Proximity
-- **Location-Based Discovery**: See items near you (opt-in)
-- **Pickup Spots**: Suggest public meeting locations
-- **Trading Matches**: Two people nearby with items for each other
-- **Local Events**: Organize swap meets, gift parties
-
-### Phase 6: Gamification & Delight
-- **Impact Badges**: "Generous Giver", "Wish Granter" achievements
-- **Sustainability Stats**: "You've saved X items from landfills"
-- **Streaks**: Consecutive days/weeks of activity
-- **Seasonal Themes**: Holiday gifting features, spring cleaning prompts
-- **Thank You Notes**: Express gratitude to givers
-
-### Phase 7: Sustainability & Analytics
-- **Carbon Impact**: Calculate environmental savings
-- **Annual Reports**: "Your Year in Sharing" summaries
-- **Community Stats**: Group-level impact visualization
-- **Export Data**: Download your gift history
+- **Items with Photos**: % of items that include photos
+- **User Retention**: % of users who return after first week
+- **Friend Invites**: New users from existing user invites
 
 ---
 
@@ -1225,13 +970,13 @@ User A                    System                    User B
 - **Keyboard Navigation**: All actions accessible without mouse
 - **Font Sizing**: Respects system font preferences
 - **Reduced Motion**: Respects prefers-reduced-motion
-- **Offline Support**: Core features work without internet
+- **Offline Support**: Core features work without internet (future)
 
 ### Language & Tone
 - **Inclusive Language**: Avoid gendered terms, use "they/them"
 - **Positive Framing**: "Share" not "get rid of", "receive" not "take"
 - **Clear Instructions**: No jargon, simple explanations
-- **Multilingual Support (future)**: i18n from day one
+- **Multilingual Support (future)**: i18n-ready from day one
 
 ### Economic Inclusivity
 - **No Paywalls**: All features free forever
@@ -1245,8 +990,7 @@ User A                    System                    User B
 
 ### Authentication
 - Email/password with strong requirements
-- Optional: Social login (Google, Apple)
-- Two-factor authentication (future)
+- Optional: Social login (Google, Apple) for convenience
 - Session management with timeout
 
 ### Data Privacy
@@ -1259,44 +1003,23 @@ User A                    System                    User B
 
 ### User Controls
 - **Delete Account**: Full data deletion on request
-- **Block Users**: Prevent specific people from connecting
-- **Report System**: Flag inappropriate content/behavior
+- **Unfriend**: Remove friend connections anytime
 - **Privacy Settings**: Control who can send friend requests
-- **Data Export**: Download all your data anytime
+- **Data Export**: Download all your data anytime (future)
 
-### Content Moderation
-- **User Reports**: Easy reporting of inappropriate listings
-- **Admin Review**: Manual review of flagged content
-- **Community Guidelines**: Clear rules for acceptable use
-- **Banned Items**: Prohibited categories (weapons, illegal items)
-
----
-
-## Design Aesthetic (Future)
-
-### Visual Direction
-- **Indie Aesthetic**: Hand-drawn illustrations, warm colors
-- **Organic Shapes**: Rounded corners, soft shadows
-- **Playful but Professional**: Fun without being childish
-- **Warm Color Palette**: Earthy tones, inviting atmosphere
-- **Custom Iconography**: Unique icon set
-- **Delightful Animations**: Subtle, meaningful motion
-
-### Example Mood Board Concepts
-- Warm sunset oranges and pinks
-- Hand-lettered headings
-- Textured backgrounds (paper, fabric)
-- Illustrated empty states
-- Celebratory confetti moments
-- Nature-inspired elements (leaves, waves)
+### Content Moderation (Future)
+- User reports (post-MVP)
+- Admin review process (post-MVP)
+- Community guidelines
+- Banned items list (weapons, illegal items, etc.)
 
 ---
 
 ## Open Source Considerations
 
 ### Repository Structure
-- **Frontend**: Separate repo for PWA
-- **Backend**: API server repo
+- **Frontend**: Progressive Web App
+- **Backend**: API server
 - **Documentation**: Comprehensive setup guides
 - **Contributing**: Clear contribution guidelines
 - **License**: Choose appropriate open-source license (MIT, Apache, GPL)
@@ -1306,7 +1029,6 @@ User A                    System                    User B
 - **Code of Conduct**: Welcoming, inclusive community
 - **Roadmap Visibility**: Public feature planning
 - **Contributors**: Recognition and attribution
-- **Governance**: Clear decision-making process
 
 ### Developer Experience
 - **Easy Setup**: One-command local development
@@ -1317,56 +1039,64 @@ User A                    System                    User B
 
 ---
 
-## Questions for Future Discussion
+## MVP Scope Summary
 
-### Business Model
-- How will hosting/infrastructure be funded?
-- Should there be optional donations?
-- Grants from sustainability organizations?
-- Sponsorships from aligned brands?
+### What's IN the MVP:
+✅ List items with photos and descriptions
+✅ Browse friends' available items
+✅ Create wishes with priority levels
+✅ Browse friends' wishes
+✅ Connect with friends (search by username/email)
+✅ Mark items as gifted (simple deletion)
+✅ Mark wishes as fulfilled (simple deletion)
+✅ Landing page for first-time visitors
+✅ Basic profile management (name, username, email)
+✅ Friend-only privacy
 
-### Scaling Concerns
-- What happens when user bases grow large?
-- How to prevent spam/abuse at scale?
-- Image storage costs with many users?
-- Performance optimization strategies?
-
-### Legal Considerations
-- Liability for items (as-is disclaimers)?
-- Age restrictions (13+, 18+)?
-- Terms of service requirements?
-- GDPR/privacy law compliance?
-
-### Community Management
-- Moderation team structure?
-- Handling disputes between users?
-- Promoting healthy sharing culture?
-- Preventing marketplace behavior (selling)?
+### What's NOT in the MVP (See FUTURE_FEATURES.md):
+❌ Search and filter functionality
+❌ Sort options
+❌ In-app messaging or interest notifications
+❌ "I want this" / "I have this" buttons
+❌ Pickup location field
+❌ Share functionality
+❌ Friend profile views
+❌ Gift history tracking
+❌ Profile photos
+❌ View counts
+❌ Report/moderation tools
+❌ Categories and tags
+❌ Home dashboard with activity feed
+❌ Advanced notifications
 
 ---
 
 ## Conclusion
 
-The Friend Gifting App reimagines how communities share resources, replacing wasteful consumption with generous connection. By making it delightfully easy to give, receive, and ask, we create a digital space that embodies sharing economy values while respecting privacy and accessibility.
+This MVP design prioritizes:
+✓ Core value: connecting friends with items/wishes
+✓ Simplicity: minimal features, maximum clarity
+✓ Privacy: friend-only visibility
+✓ Trust: coordination happens through existing relationships
+✓ Validation: test the concept before building complex features
 
-This design prioritizes:
-✓ Effortless sharing over hoarding
-✓ Friend connections over stranger transactions
-✓ Community impact over individual accumulation
-✓ Privacy and safety over public exposure
-✓ Accessibility over exclusivity
+The app succeeds when:
+- Friends easily discover what each other have/need
+- Items find new homes instead of landfills
+- Asking for help feels natural and stigma-free
+- Users return weekly to browse and list items
 
-The app succeeds when friends feel closer, when items find new homes instead of landfills, and when asking for help feels natural rather than shameful. Every screen, every interaction, every notification should reinforce these values.
+Every feature in the MVP serves these goals directly. Advanced features documented in FUTURE_FEATURES.md will be prioritized based on user feedback and actual usage patterns.
 
 ---
 
 **Next Steps**:
-1. Review and refine this design spec
-2. Create detailed technical architecture
+1. Review and approve this MVP spec
+2. Create technical architecture document
 3. Choose technology stack
 4. Design database schema
-5. Create wireframes/mockups
-6. Build MVP with core features
-7. User testing with small group
+5. Create high-fidelity mockups/designs
+6. Build MVP
+7. User testing with small friend group
 8. Iterate based on feedback
-9. Public launch
+9. Soft launch

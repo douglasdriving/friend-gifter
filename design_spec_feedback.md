@@ -1,23 +1,12 @@
-- filtering by friend in the item browser is not needed at this moment
-- can also remove search and sort functionality for now. this can be added when the app is bigger. for now, list list all items in a naet way
-- remove DM option, friends can do that outside the app
-- you can also remove the "i have this" button, the offer feature, for now. friends can just dm eachother if they have something the other person is looking for. if the gift went through, the person who requested it just marks it as received by themselves. remember, this is gonna be used between people who know and trust each other!
-- move gift history to future feature, it is not needed now for MVP. should not build at this point.
-- also, remove the "I want this" button tap / feature from when you are browsing items. this is also something friends can just do in a DM. not necessary in MVP.
-- the app should have a very simple landing page the first time you get there that explains what it is in like 1-2 sentences
-- in the "mark as gifted" dialog, you can remove the option to input who received it. this is not important for the MVP
-- for home dashboard, you dont need a profile icon
-- for home dashboard, you dont need "recent activity"
-- actually, you can remove the home dashboard all together. just drop right into the list of available items. the dashboard is redundant right now
-- for the available items page, you can remove the entire top bar. you will know that you are on that page by having its icon highlighted in the bottom nav bar, and none of the filtering features are needed right now.
-- you can remove the "pickup" for now in the MVP. pickup will be known since friends know eachother
-- remove share button from item details view! should not share anything in/from this app.
-- and also the "I want this button", people will handle that in DM's outside the app
-- report/hide can also be removed, since this will be between friends who trust each other
-- remove "view count" from your personal item list page. you dont need to see this right now, or track in db
-- remove all filter, search, and sort functionality from the "wishes" page (can remove the whole top bar here too)
-- remove the 10. friend profile view. this is not needed for now! you should not look at friend profiles in this app, just at items.
-- profile settings: remove photo
-- remove system architecture diagram from this spec, that comes later
-- same with data relationships diagram
-- move all future features/roapmap into a separate document, so that this becomes focused only on what to build now
+-  97: while they do get deleted from feed, the dont need to get deleted from db. just no longer visible for users, but data can be kept
+-  99-100: dont need to write rules that are NOT gonna be included. just deleted all things like that and move to future features
+- 119: same as above
+- 138-139: same as above
+- 156: same
+- 158 same
+- 175-176: same
+- on the friends page, please put the pending request at the top.
+- 423: remove "none" things
+- 475-476: same
+- 514
+- etc, just look through the entire spec and remove every time you include what should NOT be added. that is redundant. just let the things we actually need be in there.
