@@ -12,7 +12,7 @@ Please test each item below and write your results underneath each checkbox.
 - [ ] Should redirect to dashboard
 
 **Your result:**
-
+PASS
 
 ### 2. Dashboard Loads
 - [ ] Dashboard shows welcome message with your name
@@ -21,7 +21,7 @@ Please test each item below and write your results underneath each checkbox.
 - [ ] Logout button visible in header
 
 **Your result:**
-
+PASS
 
 ---
 
@@ -35,14 +35,14 @@ Please test each item below and write your results underneath each checkbox.
 - [ ] Active tab should be highlighted in blue
 
 **Your result:**
-
+PASS
 
 ### 4. Header Always Visible
 - [ ] Scroll down on any page with content
 - [ ] Header with navigation tabs should stay at the top (sticky)
 
 **Your result:**
-
+PASS
 
 ---
 
@@ -54,7 +54,7 @@ Please test each item below and write your results underneath each checkbox.
 - [ ] "My Items" and "Refresh" buttons visible at top
 
 **Your result:**
-
+PASS
 
 ### 6. Navigate to My Items
 - [ ] Click "My Items" button
@@ -63,7 +63,7 @@ Please test each item below and write your results underneath each checkbox.
 - [ ] Should see "Browse Feed" button
 
 **Your result:**
-
+PASS
 
 ### 7. Create New Item
 - [ ] Click "+ Add Item"
@@ -78,7 +78,47 @@ Please test each item below and write your results underneath each checkbox.
 - [ ] New item should appear in the list
 
 **Your result:**
+FAILED: When pressing "Create item" a browser warning pops up saying "Failed to create item". In the front-end console, this is logged:
 
+12:10:01 [vite] http proxy error: /api/v1/items
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)
+
+and in the backend:
+
+E:\projects\vibe\friend-gifting\packages\server\src\services\items.service.ts:119:36
+
+  116  * Create new item
+  117  */
+  118 async create(userId: string, data: CreateItemDto) {
+→ 119   const item = await prisma.item.create({
+          data: {
+            userId: undefined,
+            title: "Test Laptop",
+            description: "Old latop, works fine",
+            category: "Electronics",
+            condition: "GOOD",
+        +   user: {
+        +     create: UserCreateWithoutItemsInput | UserUncheckedCreateWithoutItemsInput,
+        +     connectOrCreate: UserCreateOrConnectWithoutItemsInput,
+        +     connect: UserWhereUniqueInput
+        +   }
+          },
+          include: {
+            photos: true
+          }
+        })
+
+Argument `user` is missing.
+    at wn (E:\projects\vibe\friend-gifting\node_modules\.pnpm\@prisma+client@5.22.0_prisma@5.22.0\node_modules\@prisma\client\runtime\library.js:29:1363)
+    at $n.handleRequestError (E:\projects\vibe\friend-gifting\node_modules\.pnpm\@prisma+client@5.22.0_prisma@5.22.0\node_modules\@prisma\client\runtime\library.js:121:6958)
+    at $n.handleAndLogRequestError (E:\projects\vibe\friend-gifting\node_modules\.pnpm\@prisma+client@5.22.0_prisma@5.22.0\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (E:\projects\vibe\friend-gifting\node_modules\.pnpm\@prisma+client@5.22.0_prisma@5.22.0\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (E:\projects\vibe\friend-gifting\node_modules\.pnpm\@prisma+client@5.22.0_prisma@5.22.0\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async Object.create (E:\projects\vibe\friend-gifting\packages\server\src\services\items.service.ts:119:18)
+    at async create (E:\projects\vibe\friend-gifting\packages\server\src\controllers\items.controller.ts:28:18) {
+  clientVersion: '5.22.0'
+}
 
 ### 8. View Item Details
 - [ ] Click on any item card
@@ -128,7 +168,11 @@ Please test each item below and write your results underneath each checkbox.
 - [ ] "My Wishes" and "Refresh" buttons visible at top
 
 **Your result:**
-
+FAILED: No wishes appear.
+11:58:16 [vite] http proxy error: /api/v1/wishes/feed
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) (x4)
 
 ### 13. Navigate to My Wishes
 - [ ] Click "My Wishes" button
@@ -137,7 +181,7 @@ Please test each item below and write your results underneath each checkbox.
 - [ ] Should see "Browse Feed" button
 
 **Your result:**
-
+PASS
 
 ### 14. Create New Wish
 - [ ] Click "+ Add Wish"
@@ -152,7 +196,11 @@ Please test each item below and write your results underneath each checkbox.
 - [ ] New wish should appear in the list
 
 **Your result:**
-
+FAILED: same error as when trying to create an item.
+11:58:46 [vite] http proxy error: /api/v1/wishes
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)
 
 ### 15. View Wish Details
 - [ ] Click on any wish card
@@ -202,7 +250,7 @@ Please test each item below and write your results underneath each checkbox.
 - [ ] Default tab should be "Friends"
 
 **Your result:**
-
+PASS
 
 ### 20. Search for Users
 - [ ] Click "Search" tab
@@ -212,7 +260,11 @@ Please test each item below and write your results underneath each checkbox.
 - [ ] "Add Friend" button should be visible
 
 **Your result:**
-
+FAILED: browser warning says search failed.
+12:00:00 [vite] http proxy error: /api/v1/friends/search?q=marcus
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)
 
 ### 21. Send Friend Request
 - [ ] From search results, click "Add Friend" next to Marcus
@@ -242,7 +294,7 @@ Please test each item below and write your results underneath each checkbox.
 - [ ] Should redirect to dashboard
 
 **Your result:**
-
+PASS, but I had to restart the server for this to work. It might be that a server error caused basically all items to stop working, also the above fails
 
 ### 24. Accept Friend Request
 - [ ] Click "Friends" tab
@@ -314,7 +366,7 @@ Please test each item below and write your results underneath each checkbox.
 - [ ] From My Wishes: "Browse Feed" button should take you to Wishes Feed
 
 **Your result:**
-
+PASS
 
 ---
 
