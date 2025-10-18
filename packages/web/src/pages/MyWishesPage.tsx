@@ -1,0 +1,79 @@
+import { useEffect, useState } from 'react';
+import { useWishesStore } from '../stores/wishesStore';
+import { wishesService } from '../services/wishesService';
+import WishCard from '../components/wishes/WishCard';
+import WishForm from '../components/wishes/WishForm';
+import type { CreateWishDto } from '@friend-gifting/shared';
+
+export default function MyWishesPage() {
+  const { myWishes, setMyWishes, addWish, setLoading, setError } = useWishesStore();
+  const [showForm, setShowForm] = useState(false);
+
+  useEffect(() => {
+    loadMyWishes();
+  }, []);
+
+  const loadMyWishes = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await wishesService.getMyWishes();
+      setMyWishes(data);
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Failed to load your wishes');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCreateWish = async (data: CreateWishDto) => {
+    try {
+      const newWish = await wishesService.create(data);
+      addWish(newWish);
+      setShowForm(false);
+    } catch (err: any) {
+      alert(err.response?.data?.message || 'Failed to create wish');
+      throw err;
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <header className="bg-white shadow-sm sticky top-0 z-10">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <h1 className="text-2xl font-bold text-primary-600">My Wishes</h1>
+          <button onClick={() => setShowForm(!showForm)} className="btn btn-primary">
+            {showForm ? 'Cancel' : '+ Add Wish'}
+          </button>
+        </div>
+      </header>
+
+      <main className="container mx-auto px-4 py-6">
+        {showForm && (
+          <div className="card mb-6">
+            <h2 className="text-xl font-semibold mb-4">Create New Wish</h2>
+            <WishForm onSubmit={handleCreateWish} onCancel={() => setShowForm(false)} />
+          </div>
+        )}
+
+        {myWishes.length === 0 ? (
+          <div className="card text-center py-12">
+            <p className="text-gray-500 text-lg mb-2">You haven't added any wishes yet</p>
+            <p className="text-gray-400 text-sm mb-4">
+              Let friends know what you're looking for
+            </p>
+            <button onClick={() => setShowForm(true)} className="btn btn-primary">
+              Add Your First Wish
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {myWishes.map((wish) => (
+              <WishCard key={wish.id} wish={wish} showOwner={false} />
+            ))}
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}

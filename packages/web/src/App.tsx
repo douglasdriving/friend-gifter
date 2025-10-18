@@ -4,6 +4,13 @@ import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
+import ItemsFeedPage from './pages/ItemsFeedPage';
+import MyItemsPage from './pages/MyItemsPage';
+import ItemDetailPage from './pages/ItemDetailPage';
+import WishesFeedPage from './pages/WishesFeedPage';
+import MyWishesPage from './pages/MyWishesPage';
+import WishDetailPage from './pages/WishDetailPage';
+import FriendsPage from './pages/FriendsPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -31,6 +38,62 @@ function App() {
         element={
           <ProtectedRoute>
             <DashboardPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/items"
+        element={
+          <ProtectedRoute>
+            <ItemsFeedPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/my-items"
+        element={
+          <ProtectedRoute>
+            <MyItemsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/items/:id"
+        element={
+          <ProtectedRoute>
+            <ItemDetailPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/wishes"
+        element={
+          <ProtectedRoute>
+            <WishesFeedPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/my-wishes"
+        element={
+          <ProtectedRoute>
+            <MyWishesPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/wishes/:id"
+        element={
+          <ProtectedRoute>
+            <WishDetailPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/friends"
+        element={
+          <ProtectedRoute>
+            <FriendsPage />
           </ProtectedRoute>
         }
       />

@@ -1,0 +1,17 @@
+{
+  "name": "Friend Gifting",
+  "short_name": "Gifting",
+  "description": "Share what you have, discover what your friends wish for",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0ea5e9",
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

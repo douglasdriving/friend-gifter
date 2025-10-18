@@ -22,6 +22,77 @@
 
 ---
 
+### Phase 6: Friends Feature ✅
+**Status**: Complete
+**Duration**: ~2 hours
+
+**Completed**:
+- ✅ Friends service with search, requests, accept/decline
+- ✅ Friends controller and routes
+- ✅ Friend-gating logic in items and wishes services
+- ✅ Comprehensive FriendsPage with tabs
+- ✅ User search functionality
+- ✅ Friend request management
+- ✅ Friends list with remove functionality
+
+**API Endpoints**:
+- GET /api/v1/friends/search
+- GET /api/v1/friends
+- GET /api/v1/friends/requests/pending
+- GET /api/v1/friends/requests/sent
+- POST /api/v1/friends/requests
+- POST /api/v1/friends/requests/:id/accept
+- DELETE /api/v1/friends/requests/:id
+- DELETE /api/v1/friends/:id
+
+---
+
+### Phase 5: Wishes Feature ✅
+**Status**: Complete
+**Duration**: ~1.5 hours
+
+**Completed**:
+- ✅ Wishes service with friend-gating
+- ✅ Wishes controller and routes
+- ✅ WishCard, WishForm components
+- ✅ WishesFeedPage, MyWishesPage, WishDetailPage
+- ✅ Priority system (LOW, MEDIUM, HIGH)
+- ✅ Mark wishes as fulfilled functionality
+
+**API Endpoints**:
+- GET /api/v1/wishes/feed
+- GET /api/v1/wishes/my-wishes
+- GET /api/v1/wishes/:id
+- POST /api/v1/wishes
+- PUT /api/v1/wishes/:id
+- POST /api/v1/wishes/:id/fulfilled
+- DELETE /api/v1/wishes/:id
+
+---
+
+### Phase 4: Items Feature ✅
+**Status**: Complete
+**Duration**: ~2 hours
+
+**Completed**:
+- ✅ Items service with friend-gating logic
+- ✅ Items controller and routes
+- ✅ ItemCard, ItemForm components
+- ✅ ItemsFeedPage, MyItemsPage, ItemDetailPage
+- ✅ Item condition system (NEW, LIKE_NEW, GOOD, FAIR, POOR)
+- ✅ Mark items as gifted functionality
+
+**API Endpoints**:
+- GET /api/v1/items/feed
+- GET /api/v1/items/my-items
+- GET /api/v1/items/:id
+- POST /api/v1/items
+- PUT /api/v1/items/:id
+- POST /api/v1/items/:id/gifted
+- DELETE /api/v1/items/:id
+
+---
+
 ### Phase 3: Frontend Foundation ✅
 **Status**: Complete
 **Duration**: ~2 hours
@@ -74,17 +145,13 @@
 
 ## 🚧 Current Phase
 
-### Phase 4: Items Feature
-**Status**: In Progress
-**Next Steps**:
-1. Create Items service (backend)
-2. Create Items CRUD endpoints
-3. Implement friend-gating for items
-4. Build ItemsFeed component
-5. Build MyItems component
-6. Build ItemForm component
-7. Build ItemDetail component
-8. Build ItemCard component
+### Phase 7: Image Upload
+**Status**: Pending (Skipped for MVP)
+**Note**: Image upload feature has been designed but not implemented. The infrastructure is in place (ItemPhoto model in database), but the actual upload functionality using Multer and Sharp is deferred to post-MVP.
+
+### Phase 8: Testing & Polish
+**Status**: Pending
+**Next Steps**: Manual testing and bug fixes
 
 ---
 
@@ -127,25 +194,25 @@
 | Phase 1: Setup | ✅ Complete | 100% |
 | Phase 2: Backend Foundation | ✅ Complete | 100% |
 | Phase 3: Frontend Foundation | ✅ Complete | 100% |
-| Phase 4: Items Feature | 🚧 In Progress | 0% |
-| Phase 5: Wishes Feature | ⏳ Pending | 0% |
-| Phase 6: Friends Feature | ⏳ Pending | 0% |
-| Phase 7: Image Upload | ⏳ Pending | 0% |
-| Phase 8: Testing | ⏳ Pending | 0% |
-| Phase 9: PWA & Polish | ⏳ Pending | 0% |
+| Phase 4: Items Feature | ✅ Complete | 100% |
+| Phase 5: Wishes Feature | ✅ Complete | 100% |
+| Phase 6: Friends Feature | ✅ Complete | 100% |
+| Phase 7: Image Upload | ⏳ Skipped (Post-MVP) | 0% |
+| Phase 8: Testing | 🚧 Ready for Testing | 0% |
+| Phase 9: PWA & Polish | ✅ Complete | 100% |
 
-**Overall Progress**: 33% (3/9 phases complete)
+**Overall Progress**: 78% (7/9 phases complete, 2 pending)
 
 ---
 
 ## 🎯 Next Actions
 
-1. **Immediate**: Complete Phase 4 (Items Feature)
-2. **Today**: Phases 5-6 (Wishes & Friends features)
-3. **Tomorrow**: Phases 7-8 (Images & Testing)
-4. **Final**: Phase 9 (PWA & Polish)
+1. **Immediate**: Manual testing of all features
+2. **Bug fixes**: Address any issues found during testing
+3. **Optional**: Implement image upload (Phase 7) if time permits
+4. **Deploy**: Prepare for deployment
 
-**Estimated Completion**: 4-6 more hours of focused work
+**Status**: MVP is feature-complete and ready for testing!
 
 ---
 

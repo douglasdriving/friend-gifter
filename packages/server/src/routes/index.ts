@@ -1,5 +1,8 @@
 import { Router } from 'express';
 import authRoutes from './auth.routes';
+import itemsRoutes from './items.routes';
+import wishesRoutes from './wishes.routes';
+import friendsRoutes from './friends.routes';
 
 const router = Router();
 
@@ -14,5 +17,8 @@ router.get('/health', (req, res) => {
 
 // Mount routes
 router.use('/auth', authRoutes);
+router.use('/items', itemsRoutes);
+router.use('/wishes', wishesRoutes);
+router.use('/friends', friendsRoutes);
 
 export default router;

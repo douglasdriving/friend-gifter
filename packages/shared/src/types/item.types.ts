@@ -1,36 +1,25 @@
-export enum ItemCondition {
-  LIKE_NEW = 'LIKE_NEW',
-  GOOD = 'GOOD',
-  FAIR = 'FAIR',
-}
-
-export enum ItemStatus {
-  AVAILABLE = 'AVAILABLE',
-  GIFTED = 'GIFTED',
-}
+export type ItemCondition = 'NEW' | 'LIKE_NEW' | 'GOOD' | 'FAIR' | 'POOR';
 
 export interface ItemPhoto {
   id: string;
+  itemId: string;
   filename: string;
-  url: string;
   order: number;
   createdAt: Date;
 }
 
 export interface Item {
   id: string;
-  ownerId: string;
+  userId: string;
   title: string;
-  description: string;
-  condition: ItemCondition | null;
-  status: ItemStatus;
+  description: string | null;
+  category: string;
+  condition: ItemCondition;
+  isGifted: boolean;
   createdAt: Date;
-  giftedAt: Date | null;
-  photos: ItemPhoto[];
-}
-
-export interface ItemWithOwner extends Item {
-  owner: {
+  updatedAt: Date;
+  photos?: ItemPhoto[];
+  user?: {
     id: string;
     username: string;
     name: string;
@@ -39,12 +28,15 @@ export interface ItemWithOwner extends Item {
 
 export interface CreateItemDto {
   title: string;
-  description: string;
-  condition?: ItemCondition;
+  description?: string;
+  category: string;
+  condition: ItemCondition;
 }
 
 export interface UpdateItemDto {
   title?: string;
   description?: string;
+  category?: string;
   condition?: ItemCondition;
+  isGifted?: boolean;
 }

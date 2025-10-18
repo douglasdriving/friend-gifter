@@ -1,5 +1,5 @@
 import { useAuthStore } from '../stores/authStore';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 export default function DashboardPage() {
   const { user, clearAuth } = useAuthStore();
@@ -32,31 +32,55 @@ export default function DashboardPage() {
           <div className="card">
             <h2 className="text-xl font-semibold mb-4">My Items</h2>
             <p className="text-gray-600 mb-4">Items you're giving away</p>
-            <button className="btn btn-primary w-full">Add Item</button>
+            <div className="space-y-2">
+              <Link to="/my-items" className="btn btn-primary w-full block text-center">
+                Manage Items
+              </Link>
+              <Link to="/items" className="btn btn-outline w-full block text-center">
+                Browse Feed
+              </Link>
+            </div>
           </div>
 
           {/* Wishes Section */}
           <div className="card">
             <h2 className="text-xl font-semibold mb-4">My Wishes</h2>
             <p className="text-gray-600 mb-4">Items you're looking for</p>
-            <button className="btn btn-primary w-full">Add Wish</button>
+            <div className="space-y-2">
+              <Link to="/my-wishes" className="btn btn-primary w-full block text-center">
+                Manage Wishes
+              </Link>
+              <Link to="/wishes" className="btn btn-outline w-full block text-center">
+                Browse Feed
+              </Link>
+            </div>
           </div>
 
           {/* Friends Section */}
           <div className="card">
             <h2 className="text-xl font-semibold mb-4">Friends</h2>
             <p className="text-gray-600 mb-4">Manage your connections</p>
-            <button className="btn btn-primary w-full">Find Friends</button>
+            <Link to="/friends" className="btn btn-primary w-full block text-center">
+              Manage Friends
+            </Link>
           </div>
         </div>
 
-        {/* Feed placeholder */}
+        {/* Quick Actions */}
         <div className="mt-8">
-          <h2 className="text-2xl font-semibold mb-4">Activity Feed</h2>
-          <div className="card text-center py-12">
-            <p className="text-gray-500 text-lg">
-              Your activity feed will appear here once you connect with friends!
+          <h2 className="text-2xl font-semibold mb-4">Quick Start</h2>
+          <div className="card">
+            <p className="text-gray-700 mb-4">
+              Get started by adding items you want to give away or browse what your friends are offering!
             </p>
+            <div className="flex gap-3">
+              <Link to="/my-items" className="btn btn-primary">
+                Add My First Item
+              </Link>
+              <Link to="/items" className="btn btn-secondary">
+                Browse Items
+              </Link>
+            </div>
           </div>
         </div>
       </main>
