@@ -57,7 +57,7 @@ git push -u origin main
    - **Runtime**: Node
    - **Build Command**:
      ```
-     pnpm install && pnpm rebuild bcrypt --build-from-source && cd packages/server && pnpm prisma generate && pnpm build
+     pnpm install && cd packages/server && npm rebuild bcrypt --build-from-source && pnpm prisma generate && pnpm build
      ```
    - **Start Command**:
      ```
