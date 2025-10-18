@@ -1,0 +1,44 @@
+import dotenv from 'dotenv';
+import path from 'path';
+
+// Load environment variables
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+
+export const config = {
+  port: parseInt(process.env.PORT || '3000', 10),
+  nodeEnv: process.env.NODE_ENV || 'development',
+
+  // Database
+  databaseUrl: process.env.DATABASE_URL || '',
+
+  // JWT
+  jwtSecret: process.env.JWT_SECRET || 'development-secret-change-in-production',
+  jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
+
+  // CORS
+  clientUrl: process.env.CLIENT_URL || 'http://localhost:5173',
+
+  // File Upload
+  maxFileSize: parseInt(process.env.MAX_FILE_SIZE || '5242880', 10), // 5MB
+
+  // Logging
+  logLevel: process.env.LOG_LEVEL || 'info',
+
+  // Rate Limiting
+  rateLimitWindowMs: 15 * 60 * 1000, // 15 minutes
+  rateLimitMax: 100, // 100 requests per window
+  authRateLimitMax: 5, // 5 login attempts per window
+};
+
+// Validate required environment variables
+const requiredEnvVars = ['DATABASE_URL', 'JWT_SECRET'];
+
+if (config.nodeEnv === 'production') {
+  for (const envVar of requiredEnvVars) {
+    if (!process.env[envVar]) {
+      throw new Error(`Missing required environment variable: ${envVar}`);
+    }
+  }
+}
+
+export default config;

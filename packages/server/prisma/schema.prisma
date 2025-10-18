@@ -1,0 +1,124 @@
+// Prisma schema for Friend Gifting App
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  username     String   @unique
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  items                  Item[]
+  wishes                 Wish[]
+  sentFriendRequests     Friendship[] @relation("FriendshipRequester")
+  receivedFriendRequests Friendship[] @relation("FriendshipAddressee")
+
+  @@map("users")
+}
+
+enum FriendshipStatus {
+  PENDING
+  ACCEPTED
+}
+
+model Friendship {
+  id          String           @id @default(uuid())
+  requesterId String
+  addresseeId String
+  status      FriendshipStatus @default(PENDING)
+  createdAt   DateTime         @default(now())
+  acceptedAt  DateTime?
+
+  // Relations
+  requester User @relation("FriendshipRequester", fields: [requesterId], references: [id], onDelete: Cascade)
+  addressee User @relation("FriendshipAddressee", fields: [addresseeId], references: [id], onDelete: Cascade)
+
+  @@unique([requesterId, addresseeId])
+  @@index([requesterId])
+  @@index([addresseeId])
+  @@map("friendships")
+}
+
+enum ItemCondition {
+  LIKE_NEW
+  GOOD
+  FAIR
+}
+
+enum ItemStatus {
+  AVAILABLE
+  GIFTED
+}
+
+model Item {
+  id          String         @id @default(uuid())
+  ownerId     String
+  title       String
+  description String
+  condition   ItemCondition?
+  status      ItemStatus     @default(AVAILABLE)
+  createdAt   DateTime       @default(now())
+  giftedAt    DateTime?
+
+  // Relations
+  owner  User        @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  photos ItemPhoto[]
+
+  @@index([ownerId])
+  @@index([status])
+  @@map("items")
+}
+
+model ItemPhoto {
+  id        String   @id @default(uuid())
+  itemId    String
+  filename  String
+  order     Int
+  createdAt DateTime @default(now())
+
+  // Relations
+  item Item @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@index([itemId])
+  @@map("item_photos")
+}
+
+enum WishPriority {
+  NEED_NOW
+  WOULD_LIKE
+  SOMEDAY
+}
+
+enum WishStatus {
+  OPEN
+  FULFILLED
+}
+
+model Wish {
+  id          String       @id @default(uuid())
+  userId      String
+  title       String
+  description String
+  priority    WishPriority
+  status      WishStatus   @default(OPEN)
+  createdAt   DateTime     @default(now())
+  fulfilledAt DateTime?
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@map("wishes")
+}

@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm create vite web -- --template react-ts)",
+      "Bash(pnpm install)",
+      "Bash(npx tailwindcss init -p)",
+      "Bash(pnpm type-check)",
+      "Bash(timeout 10 pnpm dev)",
+      "Bash(git add -A)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
