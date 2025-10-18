@@ -11,6 +11,12 @@ import { uploadService } from './services/upload.service';
 
 const app: Express = express();
 
+// Trust proxy (required for Render, Heroku, etc.)
+// This allows express-rate-limit to correctly identify users behind proxies
+if (config.nodeEnv === 'production') {
+  app.set('trust proxy', 1);
+}
+
 // Initialize upload directory
 uploadService.init().catch((error) => {
   logger.error('Failed to initialize upload directory:', error);
