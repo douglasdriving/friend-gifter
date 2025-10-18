@@ -15,6 +15,9 @@
     "lint": "eslint src --ext .ts",
     "clean": "rm -rf dist"
   },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "dependencies": {
     "@friend-gifting/shared": "workspace:*",
     "@prisma/client": "^5.7.1",
