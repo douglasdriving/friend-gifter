@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useItemsStore } from '../stores/itemsStore';
 import { itemsService } from '../services/itemsService';
 import ItemCard from '../components/items/ItemCard';
 import ItemForm from '../components/items/ItemForm';
+import AppLayout from '../components/layout/AppLayout';
 import type { CreateItemDto } from '@friend-gifting/shared';
 
 export default function MyItemsPage() {
@@ -38,17 +40,16 @@ export default function MyItemsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-primary-600">My Items</h1>
+    <AppLayout title="My Items">
+      <div className="container mx-auto px-4 py-6">
+        <div className="flex justify-between items-center mb-6">
+          <Link to="/items" className="btn btn-secondary">
+            Browse Feed
+          </Link>
           <button onClick={() => setShowForm(!showForm)} className="btn btn-primary">
             {showForm ? 'Cancel' : '+ Add Item'}
           </button>
         </div>
-      </header>
-
-      <main className="container mx-auto px-4 py-6">
         {showForm && (
           <div className="card mb-6">
             <h2 className="text-xl font-semibold mb-4">Create New Item</h2>
@@ -73,7 +74,7 @@ export default function MyItemsPage() {
             ))}
           </div>
         )}
-      </main>
-    </div>
+      </div>
+    </AppLayout>
   );
 }

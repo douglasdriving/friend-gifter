@@ -1,32 +1,17 @@
+import { Link } from 'react-router-dom';
 import { useAuthStore } from '../stores/authStore';
-import { useNavigate, Link } from 'react-router-dom';
+import AppLayout from '../components/layout/AppLayout';
 
 export default function DashboardPage() {
-  const { user, clearAuth } = useAuthStore();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    clearAuth();
-    navigate('/');
-  };
+  const { user } = useAuthStore();
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-primary-600">Friend Gifting</h1>
-          <div className="flex items-center gap-4">
-            <span className="text-gray-700">Welcome, {user?.name}!</span>
-            <button onClick={handleLogout} className="btn btn-secondary">
-              Logout
-            </button>
-          </div>
+    <AppLayout>
+      <div className="container mx-auto px-4 py-8">
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-gray-900">Welcome, {user?.name}! 👋</h2>
+          <p className="text-gray-600 mt-1">What would you like to do today?</p>
         </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
         <div className="grid md:grid-cols-3 gap-6">
           {/* Items Section */}
           <div className="card">
@@ -83,7 +68,7 @@ export default function DashboardPage() {
             </div>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </AppLayout>
   );
 }

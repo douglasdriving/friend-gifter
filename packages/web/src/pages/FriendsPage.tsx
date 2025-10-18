@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useFriendsStore } from '../stores/friendsStore';
 import { friendsService } from '../services/friendsService';
+import AppLayout from '../components/layout/AppLayout';
 
 export default function FriendsPage() {
   const {
@@ -94,13 +95,7 @@ export default function FriendsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-4">
-          <h1 className="text-2xl font-bold text-primary-600">Friends</h1>
-        </div>
-      </header>
-
+    <AppLayout title="Friends">
       {/* Tabs */}
       <div className="bg-white border-b">
         <div className="container mx-auto px-4">
@@ -139,7 +134,7 @@ export default function FriendsPage() {
         </div>
       </div>
 
-      <main className="container mx-auto px-4 py-6">
+      <div className="container mx-auto px-4 py-6">
         {/* Friends Tab */}
         {activeTab === 'friends' && (
           <div>
@@ -286,7 +281,7 @@ export default function FriendsPage() {
             )}
           </div>
         )}
-      </main>
-    </div>
+      </div>
+    </AppLayout>
   );
 }

@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useWishesStore } from '../stores/wishesStore';
 import { wishesService } from '../services/wishesService';
 import WishCard from '../components/wishes/WishCard';
+import AppLayout from '../components/layout/AppLayout';
 
 export default function WishesFeedPage() {
   const { wishes, setWishes, setLoading, setError } = useWishesStore();
@@ -31,10 +33,12 @@ export default function WishesFeedPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-primary-600">Wishes Feed</h1>
+    <AppLayout title="Wishes Feed">
+      <div className="container mx-auto px-4 py-6">
+        <div className="flex justify-between items-center mb-4">
+          <Link to="/my-wishes" className="btn btn-primary">
+            My Wishes
+          </Link>
           <button
             onClick={handleRefresh}
             disabled={isRefreshing}
@@ -43,9 +47,6 @@ export default function WishesFeedPage() {
             {isRefreshing ? 'Refreshing...' : 'Refresh'}
           </button>
         </div>
-      </header>
-
-      <main className="container mx-auto px-4 py-6">
         {wishes.length === 0 ? (
           <div className="card text-center py-12">
             <p className="text-gray-500 text-lg mb-2">No wishes available</p>
@@ -60,7 +61,7 @@ export default function WishesFeedPage() {
             ))}
           </div>
         )}
-      </main>
-    </div>
+      </div>
+    </AppLayout>
   );
 }

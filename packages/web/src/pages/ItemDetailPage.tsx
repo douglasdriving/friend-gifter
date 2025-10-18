@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useItemsStore } from '../stores/itemsStore';
 import { useAuthStore } from '../stores/authStore';
 import { itemsService } from '../services/itemsService';
+import AppLayout from '../components/layout/AppLayout';
 
 export default function ItemDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -84,16 +85,8 @@ export default function ItemDetailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-4">
-          <button onClick={() => navigate(-1)} className="text-primary-600 hover:text-primary-700">
-            ← Back
-          </button>
-        </div>
-      </header>
-
-      <main className="container mx-auto px-4 py-6 max-w-2xl">
+    <AppLayout title="Item Details" showBackButton>
+      <div className="container mx-auto px-4 py-6 max-w-2xl">
         <div className="card">
           {/* Image placeholder */}
           <div className="w-full h-64 bg-gray-200 rounded-lg mb-6 flex items-center justify-center">
@@ -141,7 +134,7 @@ export default function ItemDetailPage() {
             </div>
           )}
         </div>
-      </main>
-    </div>
+      </div>
+    </AppLayout>
   );
 }

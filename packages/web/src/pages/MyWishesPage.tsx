@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useWishesStore } from '../stores/wishesStore';
 import { wishesService } from '../services/wishesService';
 import WishCard from '../components/wishes/WishCard';
 import WishForm from '../components/wishes/WishForm';
+import AppLayout from '../components/layout/AppLayout';
 import type { CreateWishDto } from '@friend-gifting/shared';
 
 export default function MyWishesPage() {
@@ -38,17 +40,16 @@ export default function MyWishesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-primary-600">My Wishes</h1>
+    <AppLayout title="My Wishes">
+      <div className="container mx-auto px-4 py-6">
+        <div className="flex justify-between items-center mb-6">
+          <Link to="/wishes" className="btn btn-secondary">
+            Browse Feed
+          </Link>
           <button onClick={() => setShowForm(!showForm)} className="btn btn-primary">
             {showForm ? 'Cancel' : '+ Add Wish'}
           </button>
         </div>
-      </header>
-
-      <main className="container mx-auto px-4 py-6">
         {showForm && (
           <div className="card mb-6">
             <h2 className="text-xl font-semibold mb-4">Create New Wish</h2>
@@ -73,7 +74,7 @@ export default function MyWishesPage() {
             ))}
           </div>
         )}
-      </main>
-    </div>
+      </div>
+    </AppLayout>
   );
 }
