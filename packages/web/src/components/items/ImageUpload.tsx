@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import type { ItemPhoto } from '@friend-gifting/shared';
+import api from '../../lib/api';
 
 interface ImageUploadProps {
   itemId?: string;
@@ -70,19 +71,13 @@ export default function ImageUpload({
         formData.append('photos', file);
       });
 
-      const response = await fetch(`/api/v1/items/${itemId}/photos`, {
-        method: 'POST',
+      const response = await api.post<ItemPhoto[]>(`/items/${itemId}/photos`, formData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'multipart/form-data',
         },
-        body: formData,
       });
 
-      if (!response.ok) {
-        throw new Error('Upload failed');
-      }
-
-      const photos: ItemPhoto[] = await response.json();
+      const photos = response.data;
       setSelectedFiles([]);
       setPreviews([]);
       if (fileInputRef.current) {
@@ -101,17 +96,7 @@ export default function ImageUpload({
     if (!confirm('Delete this photo?')) return;
 
     try {
-      const response = await fetch(`/api/v1/items/${itemId}/photos/${photoId}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('Delete failed');
-      }
-
+      await api.delete(`/items/${itemId}/photos/${photoId}`);
       onDelete?.(photoId);
     } catch (error) {
       console.error('Delete error:', error);
