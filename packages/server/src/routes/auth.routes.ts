@@ -1,10 +1,10 @@
-import { Router } from 'express';
+import { Router, type Router as RouterType } from 'express';
 import authController from '../controllers/auth.controller';
 import { validate } from '../middleware/validation.middleware';
 import { authenticate } from '../middleware/auth.middleware';
 import { registerSchema, loginSchema } from '../services/auth.service';
 
-const router = Router();
+const router: RouterType = Router();
 
 // POST /api/v1/auth/register - Register new user
 router.post('/register', validate(registerSchema), authController.register);

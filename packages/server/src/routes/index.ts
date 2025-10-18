@@ -1,10 +1,10 @@
-import { Router } from 'express';
+import { Router, type Router as RouterType } from 'express';
 import authRoutes from './auth.routes';
 import itemsRoutes from './items.routes';
 import wishesRoutes from './wishes.routes';
 import friendsRoutes from './friends.routes';
 
-const router = Router();
+const router: RouterType = Router();
 
 // Health check endpoint
 router.get('/health', (req, res) => {

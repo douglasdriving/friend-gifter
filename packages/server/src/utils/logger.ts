@@ -24,7 +24,7 @@ const format = winston.format.combine(
   winston.format.json()
 );
 
-const transports = [
+const transports: winston.transport[] = [
   // Console transport
   new winston.transports.Console({
     format: winston.format.combine(
@@ -44,10 +44,10 @@ if (config.nodeEnv === 'production') {
     new winston.transports.File({
       filename: 'logs/error.log',
       level: 'error',
-    }),
+    }) as winston.transport,
     new winston.transports.File({
       filename: 'logs/combined.log',
-    })
+    }) as winston.transport
   );
 }
 

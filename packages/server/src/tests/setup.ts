@@ -14,7 +14,6 @@ beforeAll(async () => {
 afterEach(async () => {
   // Clear all tables in reverse order of dependencies
   await prisma.itemPhoto.deleteMany();
-  await prisma.wishPhoto.deleteMany();
   await prisma.item.deleteMany();
   await prisma.wish.deleteMany();
   await prisma.friendship.deleteMany();

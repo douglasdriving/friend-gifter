@@ -15,7 +15,7 @@ export async function createTestUser(
       username: data.username || `testuser_${Date.now()}`,
       email: data.email || `test_${Date.now()}@example.com`,
       name: data.name || 'Test User',
-      password: hashedPassword,
+      passwordHash: hashedPassword,
     },
   });
 }

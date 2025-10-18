@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { type Express } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
@@ -9,7 +9,7 @@ import routes from './routes';
 import { errorHandler, notFoundHandler } from './middleware/error.middleware';
 import { uploadService } from './services/upload.service';
 
-const app = express();
+const app: Express = express();
 
 // Initialize upload directory
 uploadService.init().catch((error) => {
