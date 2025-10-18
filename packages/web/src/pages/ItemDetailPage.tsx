@@ -4,6 +4,8 @@ import { useItemsStore } from '../stores/itemsStore';
 import { useAuthStore } from '../stores/authStore';
 import { itemsService } from '../services/itemsService';
 import AppLayout from '../components/layout/AppLayout';
+import ImageUpload from '../components/items/ImageUpload';
+import type { ItemPhoto } from '@friend-gifting/shared';
 
 export default function ItemDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -54,6 +56,28 @@ export default function ItemDetailPage() {
     }
   };
 
+  const handlePhotoUpload = (photos: ItemPhoto[]) => {
+    if (selectedItem) {
+      const updatedItem = {
+        ...selectedItem,
+        photos: [...(selectedItem.photos || []), ...photos],
+      };
+      setSelectedItem(updatedItem);
+      updateItem(selectedItem.id, updatedItem);
+    }
+  };
+
+  const handlePhotoDelete = (photoId: string) => {
+    if (selectedItem) {
+      const updatedItem = {
+        ...selectedItem,
+        photos: (selectedItem.photos || []).filter((p) => p.id !== photoId),
+      };
+      setSelectedItem(updatedItem);
+      updateItem(selectedItem.id, updatedItem);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -88,10 +112,34 @@ export default function ItemDetailPage() {
     <AppLayout title="Item Details" showBackButton>
       <div className="container mx-auto px-4 py-6 max-w-2xl">
         <div className="card">
-          {/* Image placeholder */}
-          <div className="w-full h-64 bg-gray-200 rounded-lg mb-6 flex items-center justify-center">
-            <span className="text-6xl">📦</span>
-          </div>
+          {/* Photos */}
+          {selectedItem.photos && selectedItem.photos.length > 0 ? (
+            <div className="w-full h-96 bg-gray-100 rounded-lg mb-6 overflow-hidden">
+              <img
+                src={`/uploads/${selectedItem.photos[0].filename}`}
+                alt={selectedItem.title}
+                className="w-full h-full object-contain"
+              />
+            </div>
+          ) : (
+            <div className="w-full h-64 bg-gray-200 rounded-lg mb-6 flex items-center justify-center">
+              <span className="text-6xl">📦</span>
+            </div>
+          )}
+
+          {/* Photo thumbnails if more than one */}
+          {selectedItem.photos && selectedItem.photos.length > 1 && (
+            <div className="grid grid-cols-5 gap-2 mb-6">
+              {selectedItem.photos.map((photo) => (
+                <img
+                  key={photo.id}
+                  src={`/uploads/${photo.filename}`}
+                  alt="Item photo"
+                  className="w-full h-20 object-cover rounded cursor-pointer hover:opacity-75 transition-opacity"
+                />
+              ))}
+            </div>
+          )}
 
           <h1 className="text-3xl font-bold mb-4">{selectedItem.title}</h1>
 
@@ -118,6 +166,19 @@ export default function ItemDetailPage() {
               <p className="text-sm text-gray-500">Offered by</p>
               <p className="font-medium">{selectedItem.user.name}</p>
               <p className="text-sm text-gray-500">@{selectedItem.user.username}</p>
+            </div>
+          )}
+
+          {/* Image Upload for Owner */}
+          {isOwner && (
+            <div className="border-t border-gray-200 pt-6 mb-6">
+              <h3 className="text-lg font-semibold mb-4">Manage Photos</h3>
+              <ImageUpload
+                itemId={selectedItem.id}
+                existingPhotos={selectedItem.photos || []}
+                onUpload={handlePhotoUpload}
+                onDelete={handlePhotoDelete}
+              />
             </div>
           )}
 
