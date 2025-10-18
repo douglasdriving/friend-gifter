@@ -1,4 +1,4 @@
-import { prisma } from '../utils/prisma';
+import prisma from '../utils/prisma';
 import { NotFoundError, BadRequestError, ForbiddenError } from '../utils/errors';
 
 export const friendsService = {

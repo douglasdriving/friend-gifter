@@ -1,4 +1,4 @@
-import { prisma } from '../utils/prisma';
+import prisma from '../utils/prisma';
 import { NotFoundError, ForbiddenError } from '../utils/errors';
 import type { CreateWishDto, UpdateWishDto } from '@friend-gifting/shared';
 
