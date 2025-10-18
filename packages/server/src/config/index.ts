@@ -23,6 +23,12 @@ export const config = {
   // File Upload
   maxFileSize: parseInt(process.env.MAX_FILE_SIZE || '5242880', 10), // 5MB
 
+  // Cloudinary (for production image storage)
+  cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME || '',
+  cloudinaryApiKey: process.env.CLOUDINARY_API_KEY || '',
+  cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET || '',
+  useCloudinary: process.env.USE_CLOUDINARY === 'true' || process.env.NODE_ENV === 'production',
+
   // Logging
   logLevel: process.env.LOG_LEVEL || 'info',
 

@@ -131,7 +131,7 @@ export default function ImageUpload({
             {existingPhotos.map((photo) => (
               <div key={photo.id} className="relative group">
                 <img
-                  src={`/uploads/${photo.filename}`}
+                  src={photo.filename.startsWith('http') ? photo.filename : `/uploads/${photo.filename}`}
                   alt="Item photo"
                   className="w-full h-32 object-cover rounded-lg"
                 />

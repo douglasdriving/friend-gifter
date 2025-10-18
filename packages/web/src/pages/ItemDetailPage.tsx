@@ -116,7 +116,7 @@ export default function ItemDetailPage() {
           {selectedItem.photos && selectedItem.photos.length > 0 ? (
             <div className="w-full h-96 bg-gray-100 rounded-lg mb-6 overflow-hidden">
               <img
-                src={`/uploads/${selectedItem.photos[0].filename}`}
+                src={selectedItem.photos[0].filename.startsWith('http') ? selectedItem.photos[0].filename : `/uploads/${selectedItem.photos[0].filename}`}
                 alt={selectedItem.title}
                 className="w-full h-full object-contain"
               />
@@ -133,7 +133,7 @@ export default function ItemDetailPage() {
               {selectedItem.photos.map((photo) => (
                 <img
                   key={photo.id}
-                  src={`/uploads/${photo.filename}`}
+                  src={photo.filename.startsWith('http') ? photo.filename : `/uploads/${photo.filename}`}
                   alt="Item photo"
                   className="w-full h-20 object-cover rounded cursor-pointer hover:opacity-75 transition-opacity"
                 />

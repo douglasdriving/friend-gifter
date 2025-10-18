@@ -22,7 +22,7 @@ export default function ItemCard({ item, showOwner = true }: ItemCardProps) {
         <div className="w-24 h-24 bg-gray-200 rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden">
           {item.photos && item.photos.length > 0 ? (
             <img
-              src={`/uploads/${item.photos[0].filename}`}
+              src={item.photos[0].filename.startsWith('http') ? item.photos[0].filename : `/uploads/${item.photos[0].filename}`}
               alt={item.title}
               className="w-full h-full object-cover"
             />
