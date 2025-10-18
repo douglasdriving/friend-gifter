@@ -57,11 +57,11 @@ git push -u origin main
    - **Runtime**: Node
    - **Build Command**:
      ```
-     pnpm install && pnpm prisma generate && pnpm build
+     cd ../.. && pnpm install && cd packages/server && pnpm install && pnpm prisma generate && pnpm build
      ```
    - **Start Command**:
      ```
-     pnpm prisma migrate deploy && pnpm start
+     pnpm prisma migrate deploy && node dist/index.js
      ```
    - **Plan**: **Free**
 

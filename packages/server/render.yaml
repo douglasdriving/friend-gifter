@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: friend-gifting-api
+    runtime: node
+    buildCommand: cd ../.. && pnpm install && cd packages/server && pnpm prisma generate && pnpm build && pnpm rebuild bcrypt --build-from-source
+    startCommand: pnpm prisma migrate deploy && pnpm start
+    envVars:
+      - key: NODE_ENV
+        value: production
