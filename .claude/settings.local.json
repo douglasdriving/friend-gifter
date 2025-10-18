@@ -1,9 +1,16 @@
 {
   "permissions": {
     "allow": [
-      "Bash(pnpm add uuid)",
-      "Bash(pnpm add -D @types/uuid)",
-      "Bash(git commit -m \"Add image upload backend (Phase 8 - Part 1)\n\nImplemented complete image upload infrastructure on backend:\n\nFeatures:\n- Image upload service with Sharp for processing\n- Automatic conversion to WebP format\n- Multiple image sizes (thumbnail, large)\n- Maximum 5 photos per item\n- File validation (type, size)\n- Automatic cleanup on item deletion\n\nNew Files:\n- services/upload.service.ts - Image processing with Sharp\n- middleware/upload.middleware.ts - Multer configuration\n\nUpdated:\n- items.service.ts - Added uploadPhotos() and deletePhoto()\n- items.controller.ts - Added photo upload/delete endpoints\n- items.routes.ts - Added POST :id/photos and DELETE :id/photos/:photoId\n- index.ts - Initialize upload directory, serve static files\n\nDependencies:\n- uuid for unique filenames\n- Sharp for image processing\n- Multer for file uploads\n\nNext: Frontend image upload UI\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")"
+      "Bash(git commit -m \"$(cat <<''EOF''\nComplete Phase 8: Image Upload Frontend Integration\n\nIntegrated image upload functionality into the frontend UI.\n\nFrontend Updates:\n- Updated ItemDetailPage to display photos in gallery\n  - Main photo displayed in large view (h-96)\n  - Thumbnail grid for multiple photos\n  - ImageUpload component for owners to manage photos\n  - Photo upload/delete handlers with state updates\n\n- Updated ItemCard to display photo thumbnails\n  - Shows first photo as thumbnail (24x24)\n  - Falls back to 📦 emoji if no photos\n\n- ImageUpload component features:\n  - File selection with preview\n  - Multiple image upload support\n  - Photo deletion with confirmation\n  - Max 5 photos enforcement\n  - Validation (5MB, image types only)\n  - Progress states\n\nImage Display:\n- Main photo view in ItemDetailPage\n- Thumbnail grid navigation\n- Responsive photo cards in ItemCard\n- Proper aspect ratios and object-fit\n\nThis completes Phase 8 (Image Uploads). Users can now:\n1. Upload up to 5 photos per item\n2. View photos in item cards and detail pages\n3. Delete photos from their own items\n4. See photo thumbnails in the items feed\n\nProgress: 89% complete (8/9 phases)\nNext: Phase 9 - Automated Testing Suite\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(pnpm add -D @types/supertest @vitest/coverage-v8)",
+      "Bash(docker exec postgres-friend-gifting psql -U postgres -c \"DROP DATABASE IF EXISTS friend_gifting_test;\")",
+      "Bash(docker exec postgres-friend-gifting psql -U postgres -c \"CREATE DATABASE friend_gifting_test;\")",
+      "Bash(docker ps --filter \"ancestor=postgres\" --format \"{{.Names}}\")",
+      "Bash(docker ps --format \"{{.Names}}\\t{{.Image}}\")",
+      "Bash(docker exec friend-gifting-db psql -U postgres -c \"DROP DATABASE IF EXISTS friend_gifting_test;\")",
+      "Bash(docker exec friend-gifting-db psql -U postgres -c \"CREATE DATABASE friend_gifting_test;\")",
+      "Bash(DATABASE_URL=\"postgresql://postgres:postgres@localhost:5432/friend_gifting_test?schema=public\" pnpm prisma migrate deploy)",
+      "Bash(DATABASE_URL=\"postgresql://postgres:friendgifting2024@localhost:5432/friend_gifting_test?schema=public\" pnpm prisma migrate deploy)"
     ],
     "deny": [],
     "ask": []
