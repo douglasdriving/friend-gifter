@@ -71,23 +71,25 @@ async function main() {
   // Create items
   await prisma.item.create({
     data: {
-      ownerId: emma.id,
+      userId: emma.id,
       title: 'Bread Maker',
       description:
         'Used only twice! Works perfectly. I got an espresso machine and don\'t have counter space. Has 12 settings, comes with manual.',
+      category: 'Kitchen',
       condition: 'LIKE_NEW',
-      status: 'AVAILABLE',
+      isGifted: false,
     },
   });
 
   await prisma.item.create({
     data: {
-      ownerId: aisha.id,
+      userId: aisha.id,
       title: 'Programming Books (5)',
       description:
         'Clean Code, Design Patterns, Refactoring, and more. Great condition, well-maintained.',
+      category: 'Books',
       condition: 'GOOD',
-      status: 'AVAILABLE',
+      isGifted: false,
     },
   });
 
@@ -99,8 +101,9 @@ async function main() {
       userId: marcus.id,
       title: 'Camping Tent',
       description: 'For weekend trip with friends. Any size works, prefer 4+ person capacity.',
-      priority: 'NEED_NOW',
-      status: 'OPEN',
+      category: 'Outdoor',
+      priority: 'HIGH',
+      isFulfilled: false,
     },
   });
 
@@ -109,8 +112,9 @@ async function main() {
       userId: aisha.id,
       title: 'Standing Desk',
       description: 'Adjustable height preferred. Working from home more often now.',
-      priority: 'WOULD_LIKE',
-      status: 'OPEN',
+      category: 'Furniture',
+      priority: 'MEDIUM',
+      isFulfilled: false,
     },
   });
 

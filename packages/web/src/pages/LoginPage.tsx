@@ -5,7 +5,7 @@ import { authService } from '../services/authService';
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { setAuth, setLoading } = useAuthStore();
+  const { setAuth, setLoading, isLoading } = useAuthStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -20,7 +20,9 @@ export default function LoginPage() {
       setAuth(user, token);
       navigate('/dashboard');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Login failed. Please try again.');
+      const errorMessage = err.response?.data?.error || err.response?.data?.message || 'Login failed. Please check your email and password.';
+      setError(errorMessage);
+      console.error('Login error:', err.response?.data);
     } finally {
       setLoading(false);
     }
@@ -72,8 +74,8 @@ export default function LoginPage() {
               />
             </div>
 
-            <button type="submit" className="btn btn-primary w-full">
-              Sign In
+            <button type="submit" className="btn btn-primary w-full" disabled={isLoading}>
+              {isLoading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
 

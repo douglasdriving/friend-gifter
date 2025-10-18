@@ -5,7 +5,7 @@ import { authService } from '../services/authService';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
-  const { setAuth, setLoading } = useAuthStore();
+  const { setAuth, setLoading, isLoading } = useAuthStore();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -24,7 +24,9 @@ export default function RegisterPage() {
       setAuth(user, token);
       navigate('/dashboard');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Registration failed. Please try again.');
+      const errorMessage = err.response?.data?.error || err.response?.data?.message || 'Registration failed. Please try again.';
+      setError(errorMessage);
+      console.error('Registration error:', err.response?.data);
     } finally {
       setLoading(false);
     }
@@ -114,8 +116,8 @@ export default function RegisterPage() {
               </p>
             </div>
 
-            <button type="submit" className="btn btn-primary w-full">
-              Create Account
+            <button type="submit" className="btn btn-primary w-full" disabled={isLoading}>
+              {isLoading ? 'Creating account...' : 'Create Account'}
             </button>
           </form>
 
