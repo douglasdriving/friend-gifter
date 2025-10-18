@@ -53,15 +53,15 @@ git push -u origin main
    - **Name**: `friend-gifting-api` (or any name you want)
    - **Region**: Choose closest to you
    - **Branch**: `main`
-   - **Root Directory**: `packages/server`
+   - **Root Directory**: *(LEAVE BLANK - delete any text)*
    - **Runtime**: Node
    - **Build Command**:
      ```
-     cd ../.. && pnpm install && cd packages/server && pnpm install && pnpm prisma generate && pnpm build
+     pnpm install && pnpm rebuild bcrypt --build-from-source && cd packages/server && pnpm prisma generate && pnpm build
      ```
    - **Start Command**:
      ```
-     pnpm prisma migrate deploy && node dist/index.js
+     cd packages/server && pnpm prisma migrate deploy && pnpm start
      ```
    - **Plan**: **Free**
 
@@ -138,7 +138,7 @@ To add test users (emma, marcus, aisha):
 3. On your local computer, run:
    ```bash
    cd packages/server
-   DATABASE_URL="PASTE_EXTERNAL_DB_URL_HERE" pnpm prisma:seed
+   DATABASE_URL="postgresql://friend_gifting_user:yMS28xwEvfhPKnAPqQQl91RPSGAxPr9q@dpg-d3plf8jipnbc73a0o5e0-a.singapore-postgres.render.com/friend_gifting" pnpm prisma:seed
    ```
 
 ### Step 8: Test Your App! 🎉
