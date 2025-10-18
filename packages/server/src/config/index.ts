@@ -4,6 +4,8 @@ import path from 'path';
 // Load environment variables
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
+const isDevelopment = process.env.NODE_ENV !== 'production';
+
 export const config = {
   port: parseInt(process.env.PORT || '3000', 10),
   nodeEnv: process.env.NODE_ENV || 'development',
@@ -26,8 +28,8 @@ export const config = {
 
   // Rate Limiting
   rateLimitWindowMs: 15 * 60 * 1000, // 15 minutes
-  rateLimitMax: 100, // 100 requests per window
-  authRateLimitMax: 5, // 5 login attempts per window
+  rateLimitMax: isDevelopment ? 1000 : 100, // Higher limit for development
+  authRateLimitMax: isDevelopment ? 50 : 5, // Higher limit for development
 };
 
 // Validate required environment variables

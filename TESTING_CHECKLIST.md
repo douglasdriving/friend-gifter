@@ -212,7 +212,7 @@ PASS
 - [ ] "Add Friend" button should be visible
 
 **Your result:**
-FAILED (isch): No Marcus Wilson shows up, but a Marchus Check. However, Marcus Chen is already in the "friends" tab, so it is a little weird that he shows up with an "Add Friend" button next to him.
+PASS
 
 ### 21. Send Friend Request
 - [ ] From search results, click "Add Friend" next to Marcus
@@ -220,24 +220,7 @@ FAILED (isch): No Marcus Wilson shows up, but a Marchus Check. However, Marcus C
 - [ ] Click OK
 
 **Your result:**
-FAILED: tried or Marchus Chen. Browser warning said "Failed to send request"
-
-frontend:
-12:22:14 [vite] http proxy error: /api/v1/friends/requests
-Error: read ECONNRESET
-    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)
-12:22:21 [vite] http proxy error: /api/v1/friends/requests
-AggregateError [ECONNREFUSED]:
-    at internalConnectMultiple (node:net:1134:18)
-    at afterConnectMultiple (node:net:1715:7)
-
-backend:
-E:\projects\vibe\friend-gifting\packages\server\src\services\friends.service.ts:144
-        throw new BadRequestError('You are already friends');
-              ^
-TypeError: import_errors.BadRequestError is not a constructor
-    at Object.sendRequest (E:\projects\vibe\friend-gifting\packages\server\src\services\friends.service.ts:144:15)
-    at async sendRequest (E:\projects\vibe\friend-gifting\packages\server\src\controllers\friends.controller.ts:39:24)
+PASS
 
 ### 22. View Sent Requests
 - [ ] Click "Requests" tab
@@ -246,7 +229,7 @@ TypeError: import_errors.BadRequestError is not a constructor
 - [ ] "Cancel" button visible
 
 **Your result:**
-
+PASS
 
 ---
 
@@ -259,7 +242,7 @@ TypeError: import_errors.BadRequestError is not a constructor
 - [ ] Should redirect to dashboard
 
 **Your result:**
-PASS, but I had to restart the server for this to work. It might be that a server error caused basically all items to stop working, also the above fails
+PASS
 
 ### 24. Accept Friend Request
 - [ ] Click "Friends" tab
@@ -271,7 +254,7 @@ PASS, but I had to restart the server for this to work. It might be that a serve
 - [ ] Emma should move to "Friends" tab
 
 **Your result:**
-
+PASS
 
 ### 25. Verify Friend's Items Appear
 - [ ] Click "Items" tab (Items Feed)
@@ -279,14 +262,14 @@ PASS, but I had to restart the server for this to work. It might be that a serve
 - [ ] Before accepting, you wouldn't have seen Emma's items
 
 **Your result:**
-
+PASS
 
 ### 26. Verify Friend's Wishes Appear
 - [ ] Click "Wishes" tab (Wishes Feed)
 - [ ] Should now see Emma's wishes (e.g., "Standing Desk" if not deleted)
 
 **Your result:**
-
+PASS
 
 ### 27. Remove Friend
 - [ ] Click "Friends" tab
@@ -297,7 +280,14 @@ PASS, but I had to restart the server for this to work. It might be that a serve
 - [ ] Emma should disappear from friends list
 
 **Your result:**
+FAILED: browser warning says "Failed to remove friend"
 
+front-end log:
+DELETE
+http://localhost:5173/api/v1/friends/c539d6e1-4ab0-47a9-abc5-e960ed408f65
+[HTTP/1.1 429 Too Many Requests 3ms]
+
+However, after I restarted the dev server and frontend, it worked. Seems like quite a strict request limit?
 
 ### 28. Verify Friend-Gating After Removal
 - [ ] Click "Items" tab
@@ -306,7 +296,7 @@ PASS, but I had to restart the server for this to work. It might be that a serve
 - [ ] Emma's wishes should NO LONGER appear (friend-gated)
 
 **Your result:**
-
+PASS
 
 ---
 
@@ -322,7 +312,7 @@ PASS, but I had to restart the server for this to work. It might be that a serve
 - [ ] All navigation should work within the app
 
 **Your result:**
-
+PASS
 
 ### 30. Cross-Navigation Buttons
 - [ ] From Items Feed: "My Items" button should take you to My Items
@@ -344,7 +334,7 @@ PASS
 - [ ] Should reload wishes
 
 **Your result:**
-
+PASS? Its hard to know if it reloads or not, but there are no errors at least.
 
 ### 32. Empty States
 - [ ] Create a new user account (register with new email)
@@ -355,7 +345,7 @@ PASS
 - [ ] Wishes Feed should show "No wishes available" (no friends yet)
 
 **Your result:**
-
+PASS
 
 ---
 
