@@ -13,10 +13,28 @@ A sharing economy platform that enables friends to easily share unused items and
 
 ## Tech Stack
 
-- **Frontend**: React 18 + TypeScript + Tailwind CSS
-- **Backend**: Node.js + Express + TypeScript
-- **Database**: PostgreSQL + Prisma ORM
-- **Architecture**: Monorepo with pnpm workspaces
+### Frontend
+- React 18 + TypeScript
+- Tailwind CSS for styling
+- Zustand for state management
+- Axios for API calls
+- React Router v7
+- Vite for bundling
+
+### Backend
+- Node.js + Express + TypeScript
+- PostgreSQL + Prisma ORM
+- JWT authentication
+- Cloudinary for image storage
+- Sharp for image processing
+- bcrypt for password hashing
+
+### DevOps
+- Monorepo with pnpm workspaces
+- Docker for local PostgreSQL
+- Render for backend + database hosting
+- Vercel for frontend hosting
+- GitHub for version control
 
 ## Prerequisites
 
@@ -168,8 +186,34 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for deta
 
 MIT License - see [LICENSE](LICENSE) for details.
 
+## Deployment
+
+The app is deployed and live! 🎉
+
+- **Live App**: [friend-gifter-web.vercel.app](https://friend-gifter-web.vercel.app)
+- **Backend API**: [friend-gifting-api.onrender.com](https://friend-gifting-api.onrender.com)
+
+### Deploy Your Own
+
+Want to deploy your own instance? We've got you covered:
+
+- **[Quick Deploy Guide](docs/QUICK_DEPLOY.md)** - 30-minute deployment walkthrough (100% free)
+- **[Full Deployment Guide](docs/DEPLOYMENT.md)** - Multiple hosting options and detailed instructions
+- **[Troubleshooting Guide](docs/DEPLOYMENT_TROUBLESHOOTING.md)** - Solutions to common deployment issues
+
+**Tech Stack:**
+- Frontend: Vercel
+- Backend: Render
+- Database: Render PostgreSQL
+- Images: Cloudinary
+
 ## Documentation
 
+### For Developers
+- **[Testing Guide](docs/TESTING.md)** - How to run tests and write new ones
+- **[Contributing Guide](CONTRIBUTING.md)** - How to contribute to the project
+
+### Project Documentation
 - [Idea Document](.vibe/idea.md) - Project concept and vision
 - [Design Specification](.vibe/design-spec.md) - MVP features and user flows
 - [Technical Specification](.vibe/technical-spec.md) - Architecture and implementation details
