@@ -57,7 +57,7 @@ git push -u origin main
    - **Runtime**: Node
    - **Build Command**:
      ```
-     pnpm install && cd packages/server && npm rebuild bcrypt --build-from-source && pnpm prisma generate && pnpm build
+     pnpm install && cd packages/shared && pnpm build && cd ../server && npm rebuild bcrypt --build-from-source && pnpm prisma generate && pnpm build
      ```
    - **Start Command**:
      ```
@@ -138,7 +138,7 @@ To add test users (emma, marcus, aisha):
 3. On your local computer, run:
    ```bash
    cd packages/server
-   DATABASE_URL="postgresql://friend_gifting_user:yMS28xwEvfhPKnAPqQQl91RPSGAxPr9q@dpg-d3plf8jipnbc73a0o5e0-a.singapore-postgres.render.com/friend_gifting" pnpm prisma:seed
+   DATABASE_URL="postgresql://your-db-url" pnpm prisma:seed
    ```
 
 ### Step 8: Test Your App! 🎉
