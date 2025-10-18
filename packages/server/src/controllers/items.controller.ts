@@ -50,4 +50,24 @@ export const itemsController = {
     const result = await itemsService.delete(id, userId);
     res.json(result);
   },
+
+  async uploadPhotos(req: Request, res: Response) {
+    const { id } = req.params;
+    const userId = req.user!.userId;
+    const files = req.files as Express.Multer.File[];
+
+    if (!files || files.length === 0) {
+      return res.status(400).json({ message: 'No files uploaded' });
+    }
+
+    const photos = await itemsService.uploadPhotos(id, userId, files);
+    res.status(201).json(photos);
+  },
+
+  async deletePhoto(req: Request, res: Response) {
+    const { photoId } = req.params;
+    const userId = req.user!.userId;
+    const result = await itemsService.deletePhoto(photoId, userId);
+    res.json(result);
+  },
 };

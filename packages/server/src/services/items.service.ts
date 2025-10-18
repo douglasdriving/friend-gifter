@@ -1,6 +1,7 @@
 import prisma from '../utils/prisma';
 import { NotFoundError, ForbiddenError, BadRequestError } from '../utils/errors';
 import type { CreateItemDto, UpdateItemDto } from '@friend-gifting/shared';
+import { uploadService } from './upload.service';
 
 export const itemsService = {
   /**
@@ -190,10 +191,86 @@ export const itemsService = {
       throw new ForbiddenError('You can only delete your own items');
     }
 
+    // Delete associated photos
+    const photos = await prisma.itemPhoto.findMany({
+      where: { itemId },
+    });
+
+    for (const photo of photos) {
+      await uploadService.deleteImage(photo.filename);
+    }
+
     await prisma.item.delete({
       where: { id: itemId },
     });
 
     return { message: 'Item deleted successfully' };
+  },
+
+  /**
+   * Upload photos for an item
+   */
+  async uploadPhotos(itemId: string, userId: string, files: Express.Multer.File[]) {
+    // Check if item exists and belongs to user
+    const item = await prisma.item.findUnique({
+      where: { id: itemId },
+      include: { photos: true },
+    });
+
+    if (!item) {
+      throw new NotFoundError('Item not found');
+    }
+
+    if (item.userId !== userId) {
+      throw new ForbiddenError('You can only upload photos for your own items');
+    }
+
+    // Limit total photos to 5
+    if (item.photos.length + files.length > 5) {
+      throw new BadRequestError('Maximum 5 photos per item');
+    }
+
+    // Process and save each photo
+    const photoPromises = files.map(async (file, index) => {
+      const filename = await uploadService.processImage(file);
+      return prisma.itemPhoto.create({
+        data: {
+          itemId,
+          filename,
+          order: item.photos.length + index,
+        },
+      });
+    });
+
+    const photos = await Promise.all(photoPromises);
+    return photos;
+  },
+
+  /**
+   * Delete a photo
+   */
+  async deletePhoto(photoId: string, userId: string) {
+    const photo = await prisma.itemPhoto.findUnique({
+      where: { id: photoId },
+      include: { item: true },
+    });
+
+    if (!photo) {
+      throw new NotFoundError('Photo not found');
+    }
+
+    if (photo.item.userId !== userId) {
+      throw new ForbiddenError('You can only delete photos from your own items');
+    }
+
+    // Delete file from filesystem
+    await uploadService.deleteImage(photo.filename);
+
+    // Delete from database
+    await prisma.itemPhoto.delete({
+      where: { id: photoId },
+    });
+
+    return { message: 'Photo deleted successfully' };
   },
 };

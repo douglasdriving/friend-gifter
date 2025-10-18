@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { itemsController } from '../controllers/items.controller';
 import { authenticate } from '../middleware/auth.middleware';
 import { validate } from '../middleware/validation.middleware';
+import { upload } from '../middleware/upload.middleware';
 import { z } from 'zod';
 
 const router = Router();
@@ -32,6 +33,8 @@ router.get('/', itemsController.getFeed); // Get all items (from friends)
 router.post('/', validate(createItemSchema), itemsController.create);
 router.put('/:id', validate(updateItemSchema), itemsController.update);
 router.post('/:id/gifted', itemsController.markAsGifted);
+router.post('/:id/photos', upload.array('photos', 5), itemsController.uploadPhotos);
+router.delete('/:id/photos/:photoId', itemsController.deletePhoto);
 router.delete('/:id', itemsController.delete);
 
 export default router;

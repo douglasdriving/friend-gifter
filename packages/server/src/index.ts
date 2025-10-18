@@ -7,8 +7,14 @@ import config from './config';
 import logger from './utils/logger';
 import routes from './routes';
 import { errorHandler, notFoundHandler } from './middleware/error.middleware';
+import { uploadService } from './services/upload.service';
 
 const app = express();
+
+// Initialize upload directory
+uploadService.init().catch((error) => {
+  logger.error('Failed to initialize upload directory:', error);
+});
 
 // Security middleware
 app.use(helmet());
