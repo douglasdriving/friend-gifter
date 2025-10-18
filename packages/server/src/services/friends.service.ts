@@ -6,10 +6,30 @@ export const friendsService = {
    * Search for users by username or name
    */
   async searchUsers(query: string, currentUserId: string) {
+    // Get existing friendships (both accepted and pending)
+    const existingFriendships = await prisma.friendship.findMany({
+      where: {
+        OR: [
+          { requesterId: currentUserId },
+          { addresseeId: currentUserId },
+        ],
+      },
+      select: {
+        requesterId: true,
+        addresseeId: true,
+      },
+    });
+
+    // Extract IDs of users who are already friends or have pending requests
+    const excludedUserIds = existingFriendships.map((f) =>
+      f.requesterId === currentUserId ? f.addresseeId : f.requesterId
+    );
+
     const users = await prisma.user.findMany({
       where: {
         AND: [
           { id: { not: currentUserId } }, // Exclude current user
+          { id: { notIn: excludedUserIds } }, // Exclude existing friends and pending requests
           {
             OR: [
               { username: { contains: query, mode: 'insensitive' } },
