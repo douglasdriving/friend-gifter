@@ -2,8 +2,8 @@ import api from '../lib/api';
 import type { Item, CreateItemDto, UpdateItemDto } from '@friend-gifting/shared';
 
 export const itemsService = {
-  async getFeed(): Promise<Item[]> {
-    const response = await api.get<Item[]>('/items/feed');
+  async getAll(): Promise<Item[]> {
+    const response = await api.get<Item[]>('/items');
     return response.data;
   },
 

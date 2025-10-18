@@ -3,11 +3,10 @@ import { useAuthStore } from './stores/authStore';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import DashboardPage from './pages/DashboardPage';
-import ItemsFeedPage from './pages/ItemsFeedPage';
+import ItemsPage from './pages/ItemsPage';
 import MyItemsPage from './pages/MyItemsPage';
 import ItemDetailPage from './pages/ItemDetailPage';
-import WishesFeedPage from './pages/WishesFeedPage';
+import WishesPage from './pages/WishesPage';
 import MyWishesPage from './pages/MyWishesPage';
 import WishDetailPage from './pages/WishDetailPage';
 import FriendsPage from './pages/FriendsPage';
@@ -21,31 +20,23 @@ function App() {
       {/* Public routes */}
       <Route
         path="/"
-        element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LandingPage />}
+        element={isAuthenticated ? <Navigate to="/items" replace /> : <LandingPage />}
       />
       <Route
         path="/login"
-        element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />}
+        element={isAuthenticated ? <Navigate to="/items" replace /> : <LoginPage />}
       />
       <Route
         path="/register"
-        element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <RegisterPage />}
+        element={isAuthenticated ? <Navigate to="/items" replace /> : <RegisterPage />}
       />
 
       {/* Protected routes */}
       <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <DashboardPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
         path="/items"
         element={
           <ProtectedRoute>
-            <ItemsFeedPage />
+            <ItemsPage />
           </ProtectedRoute>
         }
       />
@@ -69,7 +60,7 @@ function App() {
         path="/wishes"
         element={
           <ProtectedRoute>
-            <WishesFeedPage />
+            <WishesPage />
           </ProtectedRoute>
         }
       />

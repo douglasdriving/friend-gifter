@@ -38,7 +38,7 @@ export default function AppLayout({ children, title, showBackButton = false }: A
                   <span className="hidden sm:inline">Back</span>
                 </button>
               ) : (
-                <Link to="/dashboard" className="text-xl font-bold text-primary-600 hover:text-primary-700">
+                <Link to="/items" className="text-xl font-bold text-primary-600 hover:text-primary-700">
                   Friend Gifting
                 </Link>
               )}
@@ -65,16 +65,6 @@ export default function AppLayout({ children, title, showBackButton = false }: A
           <div className="border-t border-gray-200">
             <div className="container mx-auto px-4">
               <nav className="flex gap-1 overflow-x-auto">
-                <Link
-                  to="/dashboard"
-                  className={`px-4 py-2 text-sm font-medium whitespace-nowrap ${
-                    location.pathname === '/dashboard'
-                      ? 'text-primary-600 border-b-2 border-primary-600'
-                      : 'text-gray-600 hover:text-gray-800'
-                  }`}
-                >
-                  Dashboard
-                </Link>
                 <Link
                   to="/items"
                   className={`px-4 py-2 text-sm font-medium whitespace-nowrap ${

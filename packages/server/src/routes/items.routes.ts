@@ -26,9 +26,9 @@ const updateItemSchema = z.object({
 });
 
 // Routes
-router.get('/feed', itemsController.getFeed);
 router.get('/my-items', itemsController.getMyItems);
 router.get('/:id', itemsController.getById);
+router.get('/', itemsController.getFeed); // Get all items (from friends)
 router.post('/', validate(createItemSchema), itemsController.create);
 router.put('/:id', validate(updateItemSchema), itemsController.update);
 router.post('/:id/gifted', itemsController.markAsGifted);

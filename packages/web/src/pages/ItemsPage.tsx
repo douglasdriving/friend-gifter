@@ -1,43 +1,43 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useWishesStore } from '../stores/wishesStore';
-import { wishesService } from '../services/wishesService';
-import WishCard from '../components/wishes/WishCard';
+import { useItemsStore } from '../stores/itemsStore';
+import { itemsService } from '../services/itemsService';
+import ItemCard from '../components/items/ItemCard';
 import AppLayout from '../components/layout/AppLayout';
 
-export default function WishesFeedPage() {
-  const { wishes, setWishes, setLoading, setError } = useWishesStore();
+export default function ItemsPage() {
+  const { items, setItems, setLoading, setError } = useItemsStore();
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const loadWishes = async () => {
+  const loadItems = async () => {
     try {
       setLoading(true);
       setError(null);
-      const data = await wishesService.getFeed();
-      setWishes(data);
+      const data = await itemsService.getAll();
+      setItems(data);
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to load wishes');
+      setError(err.response?.data?.message || 'Failed to load items');
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    loadWishes();
+    loadItems();
   }, []);
 
   const handleRefresh = async () => {
     setIsRefreshing(true);
-    await loadWishes();
+    await loadItems();
     setIsRefreshing(false);
   };
 
   return (
-    <AppLayout title="Wishes Feed">
+    <AppLayout title="Items">
       <div className="container mx-auto px-4 py-6">
         <div className="flex justify-between items-center mb-4">
-          <Link to="/my-wishes" className="btn btn-primary">
-            My Wishes
+          <Link to="/my-items" className="btn btn-primary">
+            My Items
           </Link>
           <button
             onClick={handleRefresh}
@@ -47,17 +47,17 @@ export default function WishesFeedPage() {
             {isRefreshing ? 'Refreshing...' : 'Refresh'}
           </button>
         </div>
-        {wishes.length === 0 ? (
+        {items.length === 0 ? (
           <div className="card text-center py-12">
-            <p className="text-gray-500 text-lg mb-2">No wishes available</p>
+            <p className="text-gray-500 text-lg mb-2">No items available</p>
             <p className="text-gray-400 text-sm">
-              Connect with friends to see what they're looking for!
+              Connect with friends to see their items!
             </p>
           </div>
         ) : (
           <div className="space-y-4">
-            {wishes.map((wish) => (
-              <WishCard key={wish.id} wish={wish} showOwner={true} />
+            {items.map((item) => (
+              <ItemCard key={item.id} item={item} showOwner={true} />
             ))}
           </div>
         )}

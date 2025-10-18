@@ -2,8 +2,8 @@ import api from '../lib/api';
 import type { Wish, CreateWishDto, UpdateWishDto } from '@friend-gifting/shared';
 
 export const wishesService = {
-  async getFeed(): Promise<Wish[]> {
-    const response = await api.get<Wish[]>('/wishes/feed');
+  async getAll(): Promise<Wish[]> {
+    const response = await api.get<Wish[]>('/wishes');
     return response.data;
   },
 

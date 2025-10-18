@@ -44,7 +44,7 @@ export default function MyWishesPage() {
       <div className="container mx-auto px-4 py-6">
         <div className="flex justify-between items-center mb-6">
           <Link to="/wishes" className="btn btn-secondary">
-            Browse Feed
+            Back to Wishes
           </Link>
           <button onClick={() => setShowForm(!showForm)} className="btn btn-primary">
             {showForm ? 'Cancel' : '+ Add Wish'}

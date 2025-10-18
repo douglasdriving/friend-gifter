@@ -44,7 +44,7 @@ export default function MyItemsPage() {
       <div className="container mx-auto px-4 py-6">
         <div className="flex justify-between items-center mb-6">
           <Link to="/items" className="btn btn-secondary">
-            Browse Feed
+            Back to Items
           </Link>
           <button onClick={() => setShowForm(!showForm)} className="btn btn-primary">
             {showForm ? 'Cancel' : '+ Add Item'}

@@ -26,9 +26,9 @@ const updateWishSchema = z.object({
 });
 
 // Routes
-router.get('/feed', wishesController.getFeed);
 router.get('/my-wishes', wishesController.getMyWishes);
 router.get('/:id', wishesController.getById);
+router.get('/', wishesController.getFeed); // Get all wishes (from friends)
 router.post('/', validate(createWishSchema), wishesController.create);
 router.put('/:id', validate(updateWishSchema), wishesController.update);
 router.post('/:id/fulfilled', wishesController.markAsFulfilled);
