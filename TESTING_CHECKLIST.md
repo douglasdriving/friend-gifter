@@ -78,47 +78,7 @@ PASS
 - [ ] New item should appear in the list
 
 **Your result:**
-FAILED: When pressing "Create item" a browser warning pops up saying "Failed to create item". In the front-end console, this is logged:
-
-12:10:01 [vite] http proxy error: /api/v1/items
-Error: read ECONNRESET
-    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)
-
-and in the backend:
-
-E:\projects\vibe\friend-gifting\packages\server\src\services\items.service.ts:119:36
-
-  116  * Create new item
-  117  */
-  118 async create(userId: string, data: CreateItemDto) {
-→ 119   const item = await prisma.item.create({
-          data: {
-            userId: undefined,
-            title: "Test Laptop",
-            description: "Old latop, works fine",
-            category: "Electronics",
-            condition: "GOOD",
-        +   user: {
-        +     create: UserCreateWithoutItemsInput | UserUncheckedCreateWithoutItemsInput,
-        +     connectOrCreate: UserCreateOrConnectWithoutItemsInput,
-        +     connect: UserWhereUniqueInput
-        +   }
-          },
-          include: {
-            photos: true
-          }
-        })
-
-Argument `user` is missing.
-    at wn (E:\projects\vibe\friend-gifting\node_modules\.pnpm\@prisma+client@5.22.0_prisma@5.22.0\node_modules\@prisma\client\runtime\library.js:29:1363)
-    at $n.handleRequestError (E:\projects\vibe\friend-gifting\node_modules\.pnpm\@prisma+client@5.22.0_prisma@5.22.0\node_modules\@prisma\client\runtime\library.js:121:6958)
-    at $n.handleAndLogRequestError (E:\projects\vibe\friend-gifting\node_modules\.pnpm\@prisma+client@5.22.0_prisma@5.22.0\node_modules\@prisma\client\runtime\library.js:121:6623)
-    at $n.request (E:\projects\vibe\friend-gifting\node_modules\.pnpm\@prisma+client@5.22.0_prisma@5.22.0\node_modules\@prisma\client\runtime\library.js:121:6307)
-    at async l (E:\projects\vibe\friend-gifting\node_modules\.pnpm\@prisma+client@5.22.0_prisma@5.22.0\node_modules\@prisma\client\runtime\library.js:130:9633)
-    at async Object.create (E:\projects\vibe\friend-gifting\packages\server\src\services\items.service.ts:119:18)
-    at async create (E:\projects\vibe\friend-gifting\packages\server\src\controllers\items.controller.ts:28:18) {
-  clientVersion: '5.22.0'
-}
+PASS
 
 ### 8. View Item Details
 - [ ] Click on any item card
@@ -128,7 +88,7 @@ Argument `user` is missing.
 - [ ] If it's your item: "Mark as Gifted" and "Delete Item" buttons visible
 
 **Your result:**
-
+PASS
 
 ### 9. Back Button from Item Details
 - [ ] From item detail page, click the back button (←)
@@ -136,7 +96,7 @@ Argument `user` is missing.
 - [ ] Navigation tabs should be visible again
 
 **Your result:**
-
+PASS
 
 ### 10. Mark Item as Gifted
 - [ ] Navigate to one of YOUR items (e.g., the "Test Laptop" you created)
@@ -145,7 +105,7 @@ Argument `user` is missing.
 - [ ] "Mark as Gifted" button should disappear
 
 **Your result:**
-
+PASS
 
 ### 11. Delete Item
 - [ ] Navigate to one of YOUR items
@@ -156,7 +116,7 @@ Argument `user` is missing.
 - [ ] Item should no longer be in the list
 
 **Your result:**
-
+PASS
 
 ---
 
@@ -168,11 +128,7 @@ Argument `user` is missing.
 - [ ] "My Wishes" and "Refresh" buttons visible at top
 
 **Your result:**
-FAILED: No wishes appear.
-11:58:16 [vite] http proxy error: /api/v1/wishes/feed
-AggregateError [ECONNREFUSED]:
-    at internalConnectMultiple (node:net:1134:18)
-    at afterConnectMultiple (node:net:1715:7) (x4)
+PASS
 
 ### 13. Navigate to My Wishes
 - [ ] Click "My Wishes" button
@@ -196,11 +152,7 @@ PASS
 - [ ] New wish should appear in the list
 
 **Your result:**
-FAILED: same error as when trying to create an item.
-11:58:46 [vite] http proxy error: /api/v1/wishes
-AggregateError [ECONNREFUSED]:
-    at internalConnectMultiple (node:net:1134:18)
-    at afterConnectMultiple (node:net:1715:7)
+PASS
 
 ### 15. View Wish Details
 - [ ] Click on any wish card
@@ -210,7 +162,7 @@ AggregateError [ECONNREFUSED]:
 - [ ] If it's your wish: "Mark as Fulfilled" and "Delete Wish" buttons visible
 
 **Your result:**
-
+PASS
 
 ### 16. Back Button from Wish Details
 - [ ] From wish detail page, click the back button (←)
@@ -218,7 +170,7 @@ AggregateError [ECONNREFUSED]:
 - [ ] Navigation tabs should be visible again
 
 **Your result:**
-
+PASS
 
 ### 17. Mark Wish as Fulfilled
 - [ ] Navigate to one of YOUR wishes (e.g., "Standing Desk")
@@ -227,7 +179,7 @@ AggregateError [ECONNREFUSED]:
 - [ ] "Mark as Fulfilled" button should disappear
 
 **Your result:**
-
+PASS
 
 ### 18. Delete Wish
 - [ ] Navigate to one of YOUR wishes
@@ -238,7 +190,7 @@ AggregateError [ECONNREFUSED]:
 - [ ] Wish should no longer be in the list
 
 **Your result:**
-
+PASS
 
 ---
 
@@ -260,11 +212,7 @@ PASS
 - [ ] "Add Friend" button should be visible
 
 **Your result:**
-FAILED: browser warning says search failed.
-12:00:00 [vite] http proxy error: /api/v1/friends/search?q=marcus
-AggregateError [ECONNREFUSED]:
-    at internalConnectMultiple (node:net:1134:18)
-    at afterConnectMultiple (node:net:1715:7)
+FAILED (isch): No Marcus Wilson shows up, but a Marchus Check. However, Marcus Chen is already in the "friends" tab, so it is a little weird that he shows up with an "Add Friend" button next to him.
 
 ### 21. Send Friend Request
 - [ ] From search results, click "Add Friend" next to Marcus
@@ -272,7 +220,24 @@ AggregateError [ECONNREFUSED]:
 - [ ] Click OK
 
 **Your result:**
+FAILED: tried or Marchus Chen. Browser warning said "Failed to send request"
 
+frontend:
+12:22:14 [vite] http proxy error: /api/v1/friends/requests
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)
+12:22:21 [vite] http proxy error: /api/v1/friends/requests
+AggregateError [ECONNREFUSED]:
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7)
+
+backend:
+E:\projects\vibe\friend-gifting\packages\server\src\services\friends.service.ts:144
+        throw new BadRequestError('You are already friends');
+              ^
+TypeError: import_errors.BadRequestError is not a constructor
+    at Object.sendRequest (E:\projects\vibe\friend-gifting\packages\server\src\services\friends.service.ts:144:15)
+    at async sendRequest (E:\projects\vibe\friend-gifting\packages\server\src\controllers\friends.controller.ts:39:24)
 
 ### 22. View Sent Requests
 - [ ] Click "Requests" tab

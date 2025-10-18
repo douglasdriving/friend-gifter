@@ -20,6 +20,13 @@ export class ValidationError extends AppError {
   }
 }
 
+export class BadRequestError extends AppError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(400, ErrorCode.VALIDATION_ERROR, message, details);
+    this.name = 'BadRequestError';
+  }
+}
+
 export class UnauthorizedError extends AppError {
   constructor(message = 'Unauthorized') {
     super(401, ErrorCode.UNAUTHORIZED, message);
