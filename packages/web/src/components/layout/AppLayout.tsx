@@ -38,7 +38,7 @@ export default function AppLayout({ children, showBackButton = false }: AppLayou
                 </button>
               ) : (
                 <Link to="/items" className="text-xl font-bold text-primary-600 hover:text-primary-700">
-                  Friend Gifting
+                  Giving & Receiving
                 </Link>
               )}
             </div>
