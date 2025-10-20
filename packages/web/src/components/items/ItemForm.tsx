@@ -13,6 +13,8 @@ export default function ItemForm({ onSubmit, onCancel }: ItemFormProps) {
     category: '',
     condition: 'GOOD',
   });
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [previews, setPreviews] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -29,8 +31,89 @@ export default function ItemForm({ onSubmit, onCancel }: ItemFormProps) {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+
+    if (files.length === 0) return;
+
+    const file = files[0]; // Only take first file
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      alert(`${file.name} is not an image file`);
+      return;
+    }
+
+    // Validate file size
+    if (file.size > 5 * 1024 * 1024) {
+      alert(`${file.name} is too large. Maximum size is 5MB`);
+      return;
+    }
+
+    setSelectedFiles([file]);
+
+    // Create preview
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPreviews([reader.result as string]);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemovePhoto = () => {
+    setSelectedFiles([]);
+    setPreviews([]);
+  };
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      {/* Photo Upload - First field */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Photo (Optional)
+        </label>
+
+        {/* Selected File Preview */}
+        {selectedFiles.length > 0 ? (
+          <div className="mb-3">
+            <div className="relative inline-block">
+              <img
+                src={previews[0]}
+                alt="Preview"
+                className="w-full max-w-xs h-48 object-cover rounded-lg border border-gray-300"
+              />
+              <button
+                type="button"
+                onClick={handleRemovePhoto}
+                className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileSelect}
+              className="hidden"
+              id="photo-upload-form"
+            />
+            <label
+              htmlFor="photo-upload-form"
+              className="btn btn-secondary cursor-pointer inline-block text-sm"
+            >
+              Choose Photo
+            </label>
+          </div>
+        )}
+
+        <p className="text-xs text-gray-500 mt-2">
+          Accepted formats: JPEG, PNG, WebP. Max size: 5MB.
+        </p>
+      </div>
+
       <div>
         <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
           Title *
