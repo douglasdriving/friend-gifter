@@ -40,9 +40,9 @@ A sharing economy platform that enables friends to easily share unused items and
 
 - Node.js 20.x or higher
 - pnpm 8.x or higher
-- PostgreSQL 15.x or higher
+- PostgreSQL 15+ (installs as Windows service)
 
-## Quick Start
+## Quick Start (Windows)
 
 ### 1. Install dependencies
 
@@ -50,53 +50,52 @@ A sharing economy platform that enables friends to easily share unused items and
 pnpm install
 ```
 
-### 2. Set up PostgreSQL
+### 2. Install and start PostgreSQL
 
-```bash
-# macOS
-brew install postgresql@15
-brew services start postgresql@15
-createdb friend_gifting_dev
+Download and install PostgreSQL 15+ from https://www.postgresql.org/download/windows/
 
-# Linux
-sudo apt-get install postgresql-15
-sudo systemctl start postgresql
-sudo -u postgres createdb friend_gifting_dev
+During installation:
+- Set a password for the `postgres` user
+- Keep default port 5432
+- PostgreSQL will run as a Windows service (auto-starts on boot)
+
+Create the database:
+```cmd
+"C:\Program Files\PostgreSQL\17\bin\psql" -U postgres -c "CREATE DATABASE friend_gifting;"
 ```
 
-### 3. Configure environment variables
+### 3. Start development servers
+
+Simply run the batch file from the project root:
+
+```bash
+start-dev.bat
+```
+
+This will:
+- Kill any old processes on ports 3000 and 5173
+- Start the backend server (port 3000)
+- Start the frontend dev server (port 5173)
+
+PostgreSQL runs automatically as a Windows service - no need to start/stop it manually!
+
+### 3. Configure environment variables (if not already done)
 
 Create `packages/server/.env`:
 
 ```env
-DATABASE_URL="postgresql://user:password@localhost:5432/friend_gifting_dev"
+DATABASE_URL="postgresql://postgres:yourpassword@localhost:5432/friend_gifting?schema=public"
 JWT_SECRET="your-super-secret-jwt-key-change-in-production"
-JWT_EXPIRES_IN="7d"
 PORT=3000
-NODE_ENV="development"
-CLIENT_URL="http://localhost:5173"
-MAX_FILE_SIZE=5242880
 ```
 
-Create `packages/client/.env`:
+Create `packages/web/.env`:
 
 ```env
 VITE_API_URL="http://localhost:3000/api/v1"
 ```
 
-### 4. Run database migrations
-
-```bash
-cd packages/server
-pnpm prisma migrate dev
-```
-
-### 5. Start development servers
-
-```bash
-# From root directory
-pnpm dev
-```
+**Note:** Replace `yourpassword` with the PostgreSQL password you set during installation.
 
 The app will be available at:
 - Frontend: http://localhost:5173
