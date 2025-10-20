@@ -95,7 +95,7 @@ export default function FriendsPage() {
   };
 
   return (
-    <AppLayout title="Friends">
+    <AppLayout >
       {/* Tabs */}
       <div className="bg-white border-b">
         <div className="container mx-auto px-4">

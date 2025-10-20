@@ -3,11 +3,10 @@ import { useAuthStore } from '../../stores/authStore';
 
 interface AppLayoutProps {
   children: React.ReactNode;
-  title?: string;
   showBackButton?: boolean;
 }
 
-export default function AppLayout({ children, title, showBackButton = false }: AppLayoutProps) {
+export default function AppLayout({ children, showBackButton = false }: AppLayoutProps) {
   const { user, clearAuth } = useAuthStore();
   const navigate = useNavigate();
   const location = useLocation();
@@ -42,7 +41,6 @@ export default function AppLayout({ children, title, showBackButton = false }: A
                   Friend Gifting
                 </Link>
               )}
-              {title && <h1 className="text-lg font-semibold text-gray-800">{title}</h1>}
             </div>
 
             {/* Right side - User menu */}

@@ -33,7 +33,7 @@ export default function ItemsPage() {
   };
 
   return (
-    <AppLayout title="Items">
+    <AppLayout >
       <div className="container mx-auto px-4 py-6">
         <div className="flex justify-between items-center mb-4">
           <Link to="/my-items" className="btn btn-primary">
