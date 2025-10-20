@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useItemsStore } from '../stores/itemsStore';
 import { itemsService } from '../services/itemsService';
 import ItemCard from '../components/items/ItemCard';
@@ -35,10 +34,7 @@ export default function ItemsPage() {
   return (
     <AppLayout >
       <div className="container mx-auto px-4 py-6">
-        <div className="flex justify-between items-center mb-4">
-          <Link to="/my-items" className="btn btn-primary">
-            My Items
-          </Link>
+        <div className="flex justify-start items-center mb-4">
           <button
             onClick={handleRefresh}
             disabled={isRefreshing}

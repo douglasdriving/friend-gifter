@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useItemsStore } from '../stores/itemsStore';
 import { itemsService } from '../services/itemsService';
 import ItemCard from '../components/items/ItemCard';
@@ -42,10 +41,7 @@ export default function MyItemsPage() {
   return (
     <AppLayout >
       <div className="container mx-auto px-4 py-6">
-        <div className="flex justify-between items-center mb-6">
-          <Link to="/items" className="btn btn-secondary">
-            Back to Items
-          </Link>
+        <div className="flex justify-start items-center mb-6">
           <button onClick={() => setShowForm(!showForm)} className="btn btn-primary">
             {showForm ? 'Cancel' : '+ Add Item'}
           </button>

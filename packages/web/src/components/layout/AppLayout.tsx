@@ -66,12 +66,22 @@ export default function AppLayout({ children, showBackButton = false }: AppLayou
                 <Link
                   to="/items"
                   className={`px-4 py-2 text-sm font-medium whitespace-nowrap ${
-                    isActive('/items') || isActive('/my-items')
+                    location.pathname === '/items' || location.pathname.startsWith('/items/')
                       ? 'text-primary-600 border-b-2 border-primary-600'
                       : 'text-gray-600 hover:text-gray-800'
                   }`}
                 >
                   Items
+                </Link>
+                <Link
+                  to="/my-items"
+                  className={`px-4 py-2 text-sm font-medium whitespace-nowrap ${
+                    isActive('/my-items')
+                      ? 'text-primary-600 border-b-2 border-primary-600'
+                      : 'text-gray-600 hover:text-gray-800'
+                  }`}
+                >
+                  My Items
                 </Link>
                 {/* FEATURE HIDDEN: Wishes navigation temporarily disabled for focused development */}
                 {/* May be re-enabled as a future feature */}
