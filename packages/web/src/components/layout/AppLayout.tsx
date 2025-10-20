@@ -75,7 +75,9 @@ export default function AppLayout({ children, title, showBackButton = false }: A
                 >
                   Items
                 </Link>
-                <Link
+                {/* FEATURE HIDDEN: Wishes navigation temporarily disabled for focused development */}
+                {/* May be re-enabled as a future feature */}
+                {/* <Link
                   to="/wishes"
                   className={`px-4 py-2 text-sm font-medium whitespace-nowrap ${
                     isActive('/wishes') || isActive('/my-wishes')
@@ -84,7 +86,7 @@ export default function AppLayout({ children, title, showBackButton = false }: A
                   }`}
                 >
                   Wishes
-                </Link>
+                </Link> */}
                 <Link
                   to="/friends"
                   className={`px-4 py-2 text-sm font-medium whitespace-nowrap ${

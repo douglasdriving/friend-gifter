@@ -6,9 +6,11 @@ import RegisterPage from './pages/RegisterPage';
 import ItemsPage from './pages/ItemsPage';
 import MyItemsPage from './pages/MyItemsPage';
 import ItemDetailPage from './pages/ItemDetailPage';
-import WishesPage from './pages/WishesPage';
-import MyWishesPage from './pages/MyWishesPage';
-import WishDetailPage from './pages/WishDetailPage';
+// FEATURE HIDDEN: Wishes feature temporarily disabled for focused development
+// May be re-enabled as a future feature
+// import WishesPage from './pages/WishesPage';
+// import MyWishesPage from './pages/MyWishesPage';
+// import WishDetailPage from './pages/WishDetailPage';
 import FriendsPage from './pages/FriendsPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -56,7 +58,9 @@ function App() {
           </ProtectedRoute>
         }
       />
-      <Route
+      {/* FEATURE HIDDEN: Wishes routes temporarily disabled for focused development */}
+      {/* May be re-enabled as a future feature */}
+      {/* <Route
         path="/wishes"
         element={
           <ProtectedRoute>
@@ -79,7 +83,7 @@ function App() {
             <WishDetailPage />
           </ProtectedRoute>
         }
-      />
+      /> */}
       <Route
         path="/friends"
         element={
