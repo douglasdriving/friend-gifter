@@ -20,6 +20,9 @@ export default {
           900: '#0c4a6e',
         },
       },
+      fontFamily: {
+        sans: ['Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
+      },
     },
   },
   plugins: [],

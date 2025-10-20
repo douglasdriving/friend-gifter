@@ -2,56 +2,68 @@ import { Link } from 'react-router-dom';
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-500 to-primary-700">
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center text-white">
-          <h1 className="text-5xl font-bold mb-6">Friend Gifting</h1>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Share what you have, discover what your friends wish for, and make meaningful
-            connections through giving.
+    <div className="min-h-screen bg-white">
+      <div className="container mx-auto px-6 py-16 max-w-3xl">
+        <article className="prose prose-lg prose-gray mx-auto">
+          <h1 className="text-4xl font-normal mb-6 text-gray-900">
+            Giving and Receiving
+          </h1>
+
+          <p className="text-lg leading-relaxed text-gray-700 mb-6">
+            Share, give, and receive items among friends without transactional exchange.
           </p>
 
-          <div className="flex gap-4 justify-center">
+          <div className="flex gap-3 mb-12 not-prose">
             <Link
               to="/register"
-              className="btn btn-primary bg-white text-primary-700 hover:bg-gray-100"
+              className="px-5 py-2 text-sm bg-gray-900 text-white rounded hover:bg-gray-700 transition-colors"
             >
               Get Started
             </Link>
             <Link
               to="/login"
-              className="btn btn-outline border-white text-white hover:bg-white/10"
+              className="px-5 py-2 text-sm bg-white text-gray-900 border-2 border-gray-900 rounded hover:bg-gray-50 transition-colors"
             >
               Sign In
             </Link>
           </div>
-        </div>
 
-        <div className="mt-20 grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          <div className="card text-center">
-            <div className="text-4xl mb-4">🎁</div>
-            <h3 className="text-xl font-semibold mb-2">Share Items</h3>
-            <p className="text-gray-600">
-              Post items you have and would like to give away to friends.
-            </p>
-          </div>
+          <h2 className="text-2xl font-normal mt-12 mb-4 text-gray-900">
+            What is this?
+          </h2>
 
-          <div className="card text-center">
-            <div className="text-4xl mb-4">⭐</div>
-            <h3 className="text-xl font-semibold mb-2">Make Wishes</h3>
-            <p className="text-gray-600">
-              Create a wishlist of items you're looking for from friends.
-            </p>
-          </div>
+          <p className="text-base leading-relaxed text-gray-700 mb-4">
+            The world is full of unused products sitting in storages with untapped potential. At the same time, we are always looking for things, and end up buying new items, even when there are perfectly good ones lying around that could be used instead.
+          </p>
 
-          <div className="card text-center">
-            <div className="text-4xl mb-4">🤝</div>
-            <h3 className="text-xl font-semibold mb-2">Connect</h3>
-            <p className="text-gray-600">
-              Build your network and help each other find what you need.
-            </p>
-          </div>
-        </div>
+          <p className="text-base leading-relaxed text-gray-700 mb-4">
+            To help loosen our dependency on money, break free of the cycle of buying, and move towards a circular sustainable society, this app allows us to freely gift and share items among the people we trust, without any need for financial incentives. It does so by making it easy to display what we own but do not use, and browse items that might be of interest to us that our friends have.
+          </p>
+
+          <p className="text-base leading-relaxed text-gray-700 mb-8">
+            Giving and receiving can be a great source of meaning, connecting us through our items and giving them a personal legacy. I hope this app can help you bring value to your unused products again.
+          </p>
+
+          <p className="text-base leading-relaxed text-gray-700 mb-12">
+            /Douglas
+          </p>
+
+          <h2 className="text-2xl font-normal mt-12 mb-4 text-gray-900">
+            Project
+          </h2>
+
+          <p className="text-base leading-relaxed text-gray-700 mb-12">
+            This is a free, open-source app for web. It is in very early development. If you want to check out the source code, make contributions, or add feedback, please visit{' '}
+            <a
+              href="https://github.com/douglasdriving/friend-gifter"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-900 underline hover:text-gray-600"
+            >
+              https://github.com/douglasdriving/friend-gifter
+            </a>
+          </p>
+        </article>
       </div>
     </div>
   );
