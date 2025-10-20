@@ -4,8 +4,6 @@ import { useItemsStore } from '../stores/itemsStore';
 import { useAuthStore } from '../stores/authStore';
 import { itemsService } from '../services/itemsService';
 import AppLayout from '../components/layout/AppLayout';
-import ImageUpload from '../components/items/ImageUpload';
-import type { ItemPhoto } from '@friend-gifting/shared';
 
 export default function ItemDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -53,28 +51,6 @@ export default function ItemDetailPage() {
       navigate('/my-items');
     } catch (err: any) {
       alert(err.response?.data?.message || 'Failed to delete item');
-    }
-  };
-
-  const handlePhotoUpload = (photos: ItemPhoto[]) => {
-    if (selectedItem) {
-      const updatedItem = {
-        ...selectedItem,
-        photos: [...(selectedItem.photos || []), ...photos],
-      };
-      setSelectedItem(updatedItem);
-      updateItem(selectedItem.id, updatedItem);
-    }
-  };
-
-  const handlePhotoDelete = (photoId: string) => {
-    if (selectedItem) {
-      const updatedItem = {
-        ...selectedItem,
-        photos: (selectedItem.photos || []).filter((p) => p.id !== photoId),
-      };
-      setSelectedItem(updatedItem);
-      updateItem(selectedItem.id, updatedItem);
     }
   };
 
@@ -166,19 +142,6 @@ export default function ItemDetailPage() {
               <p className="text-sm text-gray-500">Offered by</p>
               <p className="font-medium">{selectedItem.user.name}</p>
               <p className="text-sm text-gray-500">@{selectedItem.user.username}</p>
-            </div>
-          )}
-
-          {/* Image Upload for Owner */}
-          {isOwner && (
-            <div className="border-t border-gray-200 pt-6 mb-6">
-              <h3 className="text-lg font-semibold mb-4">Manage Photos</h3>
-              <ImageUpload
-                itemId={selectedItem.id}
-                existingPhotos={selectedItem.photos || []}
-                onUpload={handlePhotoUpload}
-                onDelete={handlePhotoDelete}
-              />
             </div>
           )}
 
