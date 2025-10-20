@@ -2,10 +2,14 @@ import { useState, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/authStore';
 import { authService } from '../services/authService';
+import { useBackendHealth } from '../hooks/useBackendHealth';
+import BackendLoadingScreen from '../components/BackendLoadingScreen';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
   const { setAuth, setLoading, isLoading } = useAuthStore();
+  const { isBackendReady } = useBackendHealth();
+  const [backendReady, setBackendReady] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -13,6 +17,15 @@ export default function RegisterPage() {
     name: '',
   });
   const [error, setError] = useState('');
+
+  // Show loading screen while backend is waking up
+  if (isBackendReady === false && !backendReady) {
+    return (
+      <BackendLoadingScreen
+        onBackendReady={() => setBackendReady(true)}
+      />
+    );
+  }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();

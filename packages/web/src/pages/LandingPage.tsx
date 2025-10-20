@@ -1,50 +1,9 @@
-import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import BackendLoadingScreen from '../components/BackendLoadingScreen';
+import { Link } from 'react-router-dom';
 import { useBackendHealth } from '../hooks/useBackendHealth';
 
 export default function LandingPage() {
-  const navigate = useNavigate();
-  const { isBackendReady } = useBackendHealth();
-  const [showLoadingScreen, setShowLoadingScreen] = useState(false);
-  const [pendingNavigation, setPendingNavigation] = useState<string | null>(null);
-
-  // When backend becomes ready and we have pending navigation, navigate
-  useEffect(() => {
-    if (isBackendReady && pendingNavigation) {
-      navigate(pendingNavigation);
-      setPendingNavigation(null);
-      setShowLoadingScreen(false);
-    }
-  }, [isBackendReady, pendingNavigation, navigate]);
-
-  const handleNavigate = (path: string) => (e: React.MouseEvent) => {
-    e.preventDefault();
-
-    // If backend is ready, navigate immediately
-    if (isBackendReady) {
-      navigate(path);
-      return;
-    }
-
-    // If backend status is unknown or not ready, show loading screen
-    setPendingNavigation(path);
-    setShowLoadingScreen(true);
-  };
-
-  if (showLoadingScreen) {
-    return (
-      <BackendLoadingScreen
-        onBackendReady={() => {
-          if (pendingNavigation) {
-            navigate(pendingNavigation);
-            setPendingNavigation(null);
-            setShowLoadingScreen(false);
-          }
-        }}
-      />
-    );
-  }
+  // Trigger backend health check on landing page load
+  useBackendHealth();
 
   return (
     <div className="min-h-screen bg-white">
@@ -59,20 +18,18 @@ export default function LandingPage() {
           </p>
 
           <div className="flex gap-3 mb-12 not-prose">
-            <a
-              href="/register"
-              onClick={handleNavigate('/register')}
+            <Link
+              to="/register"
               className="px-5 py-2 text-sm bg-gray-900 text-white rounded hover:bg-gray-700 transition-colors"
             >
               Get Started
-            </a>
-            <a
-              href="/login"
-              onClick={handleNavigate('/login')}
+            </Link>
+            <Link
+              to="/login"
               className="px-5 py-2 text-sm bg-white text-gray-900 border-2 border-gray-900 rounded hover:bg-gray-50 transition-colors"
             >
               Sign In
-            </a>
+            </Link>
           </div>
 
           <h2 className="text-2xl font-normal mt-12 mb-4 text-gray-900">
