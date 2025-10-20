@@ -22,6 +22,19 @@ export const itemsService = {
     return response.data;
   },
 
+  async uploadPhotos(itemId: string, files: File[]): Promise<any> {
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append('photos', file);
+    });
+    const response = await api.post(`/items/${itemId}/photos`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  },
+
   async update(id: string, data: UpdateItemDto): Promise<Item> {
     const response = await api.put<Item>(`/items/${id}`, data);
     return response.data;

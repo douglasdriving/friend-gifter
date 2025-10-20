@@ -2,7 +2,7 @@ import { useState, FormEvent } from 'react';
 import type { CreateItemDto, ItemCondition } from '@friend-gifting/shared';
 
 interface ItemFormProps {
-  onSubmit: (data: CreateItemDto) => Promise<void>;
+  onSubmit: (data: CreateItemDto, files: File[]) => Promise<void>;
   onCancel: () => void;
 }
 
@@ -21,7 +21,7 @@ export default function ItemForm({ onSubmit, onCancel }: ItemFormProps) {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      await onSubmit(formData);
+      await onSubmit(formData, selectedFiles);
     } finally {
       setIsSubmitting(false);
     }

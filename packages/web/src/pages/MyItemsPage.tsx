@@ -27,10 +27,21 @@ export default function MyItemsPage() {
     }
   };
 
-  const handleCreateItem = async (data: CreateItemDto) => {
+  const handleCreateItem = async (data: CreateItemDto, files: File[]) => {
     try {
+      // First create the item
       const newItem = await itemsService.create(data);
-      addItem(newItem);
+
+      // Then upload photos if any
+      if (files.length > 0) {
+        await itemsService.uploadPhotos(newItem.id, files);
+        // Reload the item to get the updated photo data
+        const updatedItem = await itemsService.getById(newItem.id);
+        addItem(updatedItem);
+      } else {
+        addItem(newItem);
+      }
+
       setShowForm(false);
     } catch (err: any) {
       alert(err.response?.data?.message || 'Failed to create item');
