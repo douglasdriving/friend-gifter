@@ -11,7 +11,7 @@ export default function ItemCard({ item, showOwner = true }: ItemCardProps) {
     <Link to={`/items/${item.id}`} className="card hover:shadow-lg transition-shadow">
       <div className="flex gap-4">
         {/* Image */}
-        <div className="w-24 h-24 bg-gray-200 rounded-lg flex-shrink-0 overflow-hidden">
+        <div className="w-24 h-24 bg-gray-200 flex-shrink-0 overflow-hidden">
           {item.photos && item.photos.length > 0 ? (
             <img
               src={item.photos[0].filename.startsWith('http') ? item.photos[0].filename : `/uploads/${item.photos[0].filename}`}
