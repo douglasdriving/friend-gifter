@@ -7,19 +7,11 @@ interface ItemCardProps {
 }
 
 export default function ItemCard({ item, showOwner = true }: ItemCardProps) {
-  const conditionColors = {
-    NEW: 'bg-green-100 text-green-800',
-    LIKE_NEW: 'bg-blue-100 text-blue-800',
-    GOOD: 'bg-yellow-100 text-yellow-800',
-    FAIR: 'bg-orange-100 text-orange-800',
-    POOR: 'bg-red-100 text-red-800',
-  };
-
   return (
     <Link to={`/items/${item.id}`} className="card hover:shadow-lg transition-shadow">
       <div className="flex gap-4">
         {/* Image */}
-        <div className="w-24 h-24 bg-gray-200 rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden">
+        <div className="w-24 h-24 bg-gray-200 rounded-lg flex-shrink-0 overflow-hidden">
           {item.photos && item.photos.length > 0 ? (
             <img
               src={item.photos[0].filename.startsWith('http') ? item.photos[0].filename : `/uploads/${item.photos[0].filename}`}
@@ -27,7 +19,9 @@ export default function ItemCard({ item, showOwner = true }: ItemCardProps) {
               className="w-full h-full object-cover"
             />
           ) : (
-            <span className="text-4xl">📦</span>
+            <div className="w-full h-full flex items-center justify-center">
+              <span className="text-4xl">📦</span>
+            </div>
           )}
         </div>
 
@@ -41,9 +35,6 @@ export default function ItemCard({ item, showOwner = true }: ItemCardProps) {
           <div className="flex gap-2 flex-wrap">
             <span className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded">
               {item.category}
-            </span>
-            <span className={`text-xs px-2 py-1 rounded ${conditionColors[item.condition]}`}>
-              {item.condition.replace('_', ' ')}
             </span>
           </div>
 

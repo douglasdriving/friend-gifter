@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthStore } from './stores/authStore';
+import { authService } from './services/authService';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -15,7 +17,36 @@ import FriendsPage from './pages/FriendsPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, token, setAuth, clearAuth } = useAuthStore();
+  const [isInitializing, setIsInitializing] = useState(true);
+
+  // Auto-login: Validate stored token on app mount
+  useEffect(() => {
+    const validateToken = async () => {
+      if (token && !isAuthenticated) {
+        try {
+          // Verify token is still valid by fetching current user
+          const user = await authService.getCurrentUser();
+          setAuth(user, token);
+        } catch (error) {
+          // Token is invalid, clear auth
+          clearAuth();
+        }
+      }
+      setIsInitializing(false);
+    };
+
+    validateToken();
+  }, []);
+
+  // Show loading screen while validating token
+  if (isInitializing) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <p className="text-gray-500">Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <Routes>

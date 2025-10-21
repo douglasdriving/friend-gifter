@@ -3,12 +3,14 @@ import { useItemsStore } from '../stores/itemsStore';
 import { itemsService } from '../services/itemsService';
 import ItemCard from '../components/items/ItemCard';
 import ItemForm from '../components/items/ItemForm';
+import Modal from '../components/ui/Modal';
 import AppLayout from '../components/layout/AppLayout';
 import type { CreateItemDto } from '@friend-gifting/shared';
 
 export default function MyItemsPage() {
   const { myItems, setMyItems, addItem, setLoading, setError } = useItemsStore();
-  const [showForm, setShowForm] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
     loadMyItems();
@@ -42,7 +44,14 @@ export default function MyItemsPage() {
         addItem(newItem);
       }
 
-      setShowForm(false);
+      // Show success message
+      setShowSuccess(true);
+
+      // Close modal after a brief delay
+      setTimeout(() => {
+        setShowModal(false);
+        setShowSuccess(false);
+      }, 1500);
     } catch (err: any) {
       alert(err.response?.data?.message || 'Failed to create item');
       throw err;
@@ -50,19 +59,13 @@ export default function MyItemsPage() {
   };
 
   return (
-    <AppLayout >
+    <AppLayout>
       <div className="container mx-auto px-4 py-6">
         <div className="flex justify-start items-center mb-6">
-          <button onClick={() => setShowForm(!showForm)} className="btn btn-primary">
-            {showForm ? 'Cancel' : '+ Add Item'}
+          <button onClick={() => setShowModal(true)} className="btn btn-primary">
+            + Add Item
           </button>
         </div>
-        {showForm && (
-          <div className="card mb-6">
-            <h2 className="text-xl font-semibold mb-4">Create New Item</h2>
-            <ItemForm onSubmit={handleCreateItem} onCancel={() => setShowForm(false)} />
-          </div>
-        )}
 
         {myItems.length === 0 ? (
           <div className="card text-center py-12">
@@ -70,7 +73,7 @@ export default function MyItemsPage() {
             <p className="text-gray-400 text-sm mb-4">
               Share items you'd like to give away to friends
             </p>
-            <button onClick={() => setShowForm(true)} className="btn btn-primary">
+            <button onClick={() => setShowModal(true)} className="btn btn-primary">
               Add Your First Item
             </button>
           </div>
@@ -82,6 +85,18 @@ export default function MyItemsPage() {
           </div>
         )}
       </div>
+
+      {/* Create Item Modal */}
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)} title="Create New Item">
+        {showSuccess ? (
+          <div className="text-center py-8">
+            <div className="text-6xl mb-4">✓</div>
+            <p className="text-xl text-green-600 font-semibold">Item created successfully!</p>
+          </div>
+        ) : (
+          <ItemForm onSubmit={handleCreateItem} onCancel={() => setShowModal(false)} />
+        )}
+      </Modal>
     </AppLayout>
   );
 }

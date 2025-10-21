@@ -76,13 +76,6 @@ export default function ItemDetailPage() {
   }
 
   const isOwner = selectedItem.userId === user?.id;
-  const conditionColors = {
-    NEW: 'bg-green-100 text-green-800',
-    LIKE_NEW: 'bg-blue-100 text-blue-800',
-    GOOD: 'bg-yellow-100 text-yellow-800',
-    FAIR: 'bg-orange-100 text-orange-800',
-    POOR: 'bg-red-100 text-red-800',
-  };
 
   return (
     <AppLayout showBackButton>
@@ -126,9 +119,6 @@ export default function ItemDetailPage() {
           <div className="flex gap-3 mb-6 flex-wrap">
             <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded">
               {selectedItem.category}
-            </span>
-            <span className={`px-3 py-1 rounded ${conditionColors[selectedItem.condition]}`}>
-              {selectedItem.condition.replace('_', ' ')}
             </span>
             {selectedItem.isGifted && (
               <span className="px-3 py-1 bg-green-100 text-green-800 rounded">

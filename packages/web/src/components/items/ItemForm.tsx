@@ -1,5 +1,5 @@
 import { useState, FormEvent } from 'react';
-import type { CreateItemDto, ItemCondition } from '@friend-gifting/shared';
+import type { CreateItemDto } from '@friend-gifting/shared';
 
 interface ItemFormProps {
   onSubmit: (data: CreateItemDto, files: File[]) => Promise<void>;
@@ -157,25 +157,6 @@ export default function ItemForm({ onSubmit, onCancel }: ItemFormProps) {
           maxLength={50}
           placeholder="e.g., Books, Electronics, Clothing"
         />
-      </div>
-
-      <div>
-        <label htmlFor="condition" className="block text-sm font-medium text-gray-700 mb-1">
-          Condition *
-        </label>
-        <select
-          id="condition"
-          className="input"
-          value={formData.condition}
-          onChange={(e) => handleChange('condition', e.target.value as ItemCondition)}
-          required
-        >
-          <option value="NEW">New</option>
-          <option value="LIKE_NEW">Like New</option>
-          <option value="GOOD">Good</option>
-          <option value="FAIR">Fair</option>
-          <option value="POOR">Poor</option>
-        </select>
       </div>
 
       <div className="flex gap-3 pt-4">
