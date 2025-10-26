@@ -38,7 +38,7 @@ export default function RegisterPage() {
       setAuth(user, token);
       navigate('/dashboard');
     } catch (err: any) {
-      const errorMessage = err.response?.data?.error || err.response?.data?.message || 'Registration failed. Please try again.';
+      const errorMessage = err.response?.data?.error?.message || err.response?.data?.message || 'Registration failed. Please try again.';
       setError(errorMessage);
       console.error('Registration error:', err.response?.data);
     } finally {

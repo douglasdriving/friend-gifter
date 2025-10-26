@@ -34,7 +34,7 @@ export default function LoginPage() {
       setAuth(user, token);
       navigate('/dashboard');
     } catch (err: any) {
-      const errorMessage = err.response?.data?.error || err.response?.data?.message || 'Login failed. Please check your email and password.';
+      const errorMessage = err.response?.data?.error?.message || err.response?.data?.message || 'Login failed. Please check your email and password.';
       setError(errorMessage);
       console.error('Login error:', err.response?.data);
     } finally {
