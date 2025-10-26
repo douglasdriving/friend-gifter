@@ -6,7 +6,6 @@ import { generateToken } from '../utils/jwt';
 
 describe('Items API', () => {
   let user1Token: string;
-  let user2Token: string;
   let user1Id: string;
   let user2Id: string;
 
@@ -16,7 +15,6 @@ describe('Items API', () => {
     user1Id = user1.id;
     user2Id = user2.id;
     user1Token = generateToken({ userId: user1.id });
-    user2Token = generateToken({ userId: user2.id });
   });
 
   describe('POST /api/v1/items', () => {

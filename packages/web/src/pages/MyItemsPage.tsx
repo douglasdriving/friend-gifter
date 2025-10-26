@@ -69,9 +69,9 @@ export default function MyItemsPage() {
 
         {myItems.length === 0 ? (
           <div className="card text-center py-12">
-            <p className="text-gray-500 text-lg mb-2">You haven't added any items yet</p>
+            <p className="text-gray-500 text-lg mb-2">You haven&apos;t added any items yet</p>
             <p className="text-gray-400 text-sm mb-4">
-              Share items you'd like to give away to friends
+              Share items you&apos;d like to give away to friends
             </p>
             <button onClick={() => setShowModal(true)} className="btn btn-primary">
               Add Your First Item

@@ -59,9 +59,9 @@ export default function MyWishesPage() {
 
         {myWishes.length === 0 ? (
           <div className="card text-center py-12">
-            <p className="text-gray-500 text-lg mb-2">You haven't added any wishes yet</p>
+            <p className="text-gray-500 text-lg mb-2">You haven&apos;t added any wishes yet</p>
             <p className="text-gray-400 text-sm mb-4">
-              Let friends know what you're looking for
+              Let friends know what you&apos;re looking for
             </p>
             <button onClick={() => setShowForm(true)} className="btn btn-primary">
               Add Your First Wish

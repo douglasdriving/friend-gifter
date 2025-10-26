@@ -51,7 +51,7 @@ export default function WishesPage() {
           <div className="card text-center py-12">
             <p className="text-gray-500 text-lg mb-2">No wishes available</p>
             <p className="text-gray-400 text-sm">
-              Connect with friends to see what they're looking for!
+              Connect with friends to see what they&apos;re looking for!
             </p>
           </div>
         ) : (

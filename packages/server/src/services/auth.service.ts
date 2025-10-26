@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
 import prisma from '../utils/prisma';
 import { signToken } from '../utils/jwt';
-import { ConflictError, UnauthorizedError, ValidationError } from '../utils/errors';
-import { CreateUserDto, LoginDto, AuthResponse } from '@friend-gifting/shared';
+import { ConflictError, UnauthorizedError } from '../utils/errors';
+import type { CreateUserDto, LoginDto, AuthResponse } from '@friend-gifting/shared';
 import { z } from 'zod';
 
 // Validation schemas

@@ -106,7 +106,7 @@ The app will be available at:
 ```
 friend-gifting/
 ├── packages/
-│   ├── client/          # React frontend (PWA)
+│   ├── web/             # React frontend (PWA)
 │   ├── server/          # Express backend (API)
 │   └── shared/          # Shared TypeScript types
 ├── .vibe/               # Project documentation
@@ -165,7 +165,7 @@ pnpm prisma db seed
 ## Frontend Commands
 
 ```bash
-cd packages/client
+cd packages/web
 
 # Start dev server
 pnpm dev
