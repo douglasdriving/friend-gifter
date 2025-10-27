@@ -63,4 +63,10 @@ export const friendsController = {
     const result = await friendsService.removeFriend(id, userId);
     res.json(result);
   },
+
+  async getSuggestions(req: Request, res: Response) {
+    const userId = req.user!.userId;
+    const suggestions = await friendsService.getSuggestions(userId);
+    res.json(suggestions);
+  },
 };

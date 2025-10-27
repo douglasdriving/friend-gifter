@@ -272,4 +272,119 @@ export const friendsService = {
 
     return { message: 'Friend removed successfully' };
   },
+
+  /**
+   * Get friend suggestions (friend-of-friends)
+   * Users with at least 1 mutual friend, sorted by mutual friend count
+   */
+  async getSuggestions(userId: string) {
+    // Get user's accepted friends
+    const userFriendships = await prisma.friendship.findMany({
+      where: {
+        OR: [
+          { requesterId: userId, status: 'ACCEPTED' },
+          { addresseeId: userId, status: 'ACCEPTED' },
+        ],
+      },
+      select: {
+        requesterId: true,
+        addresseeId: true,
+      },
+    });
+
+    // Extract friend IDs
+    const friendIds = userFriendships.map((f) =>
+      f.requesterId === userId ? f.addresseeId : f.requesterId
+    );
+
+    if (friendIds.length === 0) {
+      return []; // No friends, no suggestions
+    }
+
+    // Get all existing relationships (both accepted and pending)
+    const existingRelationships = await prisma.friendship.findMany({
+      where: {
+        OR: [
+          { requesterId: userId },
+          { addresseeId: userId },
+        ],
+      },
+      select: {
+        requesterId: true,
+        addresseeId: true,
+      },
+    });
+
+    // Extract IDs to exclude (current user, existing friends, pending requests)
+    const excludedUserIds = new Set([
+      userId,
+      ...existingRelationships.map((f) =>
+        f.requesterId === userId ? f.addresseeId : f.requesterId
+      ),
+    ]);
+
+    // Get friends of friends (second-degree connections)
+    const friendsOfFriends = await prisma.friendship.findMany({
+      where: {
+        OR: [
+          { requesterId: { in: friendIds }, status: 'ACCEPTED' },
+          { addresseeId: { in: friendIds }, status: 'ACCEPTED' },
+        ],
+      },
+      include: {
+        requester: {
+          select: {
+            id: true,
+            username: true,
+            name: true,
+          },
+        },
+        addressee: {
+          select: {
+            id: true,
+            username: true,
+            name: true,
+          },
+        },
+      },
+    });
+
+    // Count mutual friends for each suggestion
+    const suggestionMap = new Map<string, { user: any; mutualCount: number }>();
+
+    for (const friendship of friendsOfFriends) {
+      // Determine which user is the potential suggestion
+      const suggestionUserId =
+        friendIds.includes(friendship.requesterId)
+          ? friendship.addresseeId
+          : friendship.requesterId;
+
+      // Skip if user should be excluded
+      if (excludedUserIds.has(suggestionUserId)) {
+        continue;
+      }
+
+      const suggestionUser =
+        friendIds.includes(friendship.requesterId)
+          ? friendship.addressee
+          : friendship.requester;
+
+      // Increment mutual friend count
+      if (suggestionMap.has(suggestionUserId)) {
+        suggestionMap.get(suggestionUserId)!.mutualCount++;
+      } else {
+        suggestionMap.set(suggestionUserId, {
+          user: suggestionUser,
+          mutualCount: 1,
+        });
+      }
+    }
+
+    // Convert to array and sort by mutual friend count (descending)
+    const suggestions = Array.from(suggestionMap.values())
+      .sort((a, b) => b.mutualCount - a.mutualCount)
+      .map((s) => s.user);
+
+    return suggestions;
+  },
 };

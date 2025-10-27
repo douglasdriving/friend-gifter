@@ -21,10 +21,17 @@ export default function FriendsPage() {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState<'friends' | 'search' | 'requests'>('friends');
+  const [suggestions, setSuggestions] = useState<any[]>([]);
 
   useEffect(() => {
     loadData();
   }, []);
+
+  useEffect(() => {
+    if (activeTab === 'search') {
+      loadSuggestions();
+    }
+  }, [activeTab]);
 
   const loadData = async () => {
     try {
@@ -44,6 +51,15 @@ export default function FriendsPage() {
     }
   };
 
+  const loadSuggestions = async () => {
+    try {
+      const suggestionsList = await friendsService.getSuggestions();
+      setSuggestions(suggestionsList);
+    } catch (err: any) {
+      console.error('Failed to load suggestions:', err);
+    }
+  };
+
   const handleSearch = async () => {
     if (!searchQuery.trim()) return;
     try {
@@ -58,6 +74,10 @@ export default function FriendsPage() {
     try {
       await friendsService.sendRequest(userId);
       alert('Friend request sent!');
+      // Remove from suggestions list
+      setSuggestions(suggestions.filter(s => s.id !== userId));
+      // Remove from search results if present
+      setSearchResults(searchResults.filter(s => s.id !== userId));
       await loadData();
     } catch (err: any) {
       alert(err.response?.data?.message || 'Failed to send request');
@@ -118,7 +138,7 @@ export default function FriendsPage() {
                   : 'border-transparent text-gray-500'
               }`}
             >
-              Search
+              Add Friends
             </button>
             <button
               onClick={() => setActiveTab('requests')}
@@ -172,9 +192,33 @@ export default function FriendsPage() {
           </div>
         )}
 
-        {/* Search Tab */}
+        {/* Add Friends Tab (formerly Search) */}
         {activeTab === 'search' && (
           <div>
+            {/* Suggestions Section */}
+            {suggestions.length > 0 && (
+              <div className="mb-6">
+                <h2 className="text-lg font-semibold mb-3">Suggested Friends</h2>
+                <div className="space-y-3">
+                  {suggestions.map((user) => (
+                    <div key={user.id} className="card flex justify-between items-center">
+                      <div>
+                        <p className="font-medium">{user.name}</p>
+                        <p className="text-sm text-gray-500">@{user.username}</p>
+                      </div>
+                      <button
+                        onClick={() => handleSendRequest(user.id)}
+                        className="btn btn-primary text-sm"
+                      >
+                        Add
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Search Section */}
             <div className="card mb-6">
               <div className="flex gap-3">
                 <input
@@ -191,6 +235,7 @@ export default function FriendsPage() {
               </div>
             </div>
 
+            {/* Search Results */}
             {searchResults.length > 0 ? (
               <div className="space-y-3">
                 {searchResults.map((user) => (

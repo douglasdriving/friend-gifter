@@ -39,4 +39,9 @@ export const friendsService = {
   async removeFriend(friendshipId: string): Promise<void> {
     await api.delete(`/friends/${friendshipId}`);
   },
+
+  async getSuggestions(): Promise<User[]> {
+    const response = await api.get<User[]>('/friends/suggestions');
+    return response.data;
+  },
 };

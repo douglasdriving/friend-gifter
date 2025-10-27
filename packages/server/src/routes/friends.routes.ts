@@ -16,6 +16,7 @@ const sendRequestSchema = z.object({
 
 // Routes
 router.get('/search', friendsController.searchUsers);
+router.get('/suggestions', friendsController.getSuggestions);
 router.get('/', friendsController.getFriends);
 router.get('/requests/pending', friendsController.getPendingRequests);
 router.get('/requests/sent', friendsController.getSentRequests);
