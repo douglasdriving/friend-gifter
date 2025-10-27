@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from './stores/authStore';
 import { authService } from './services/authService';
 import LandingPage from './pages/LandingPage';
@@ -15,14 +15,19 @@ import ItemDetailPage from './pages/ItemDetailPage';
 // import WishDetailPage from './pages/WishDetailPage';
 import FriendsPage from './pages/FriendsPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import BackendLoadingScreen from './components/BackendLoadingScreen';
 
 function App() {
   const { isAuthenticated, token, setAuth, clearAuth } = useAuthStore();
   const [isInitializing, setIsInitializing] = useState(true);
+  const [isBackendReady, setIsBackendReady] = useState(false);
+  const location = useLocation();
+  const isOnLandingPage = location.pathname === '/';
 
-  // Auto-login: Validate stored token on app mount
+  // Auto-login: Validate stored token and check backend health on app mount
   useEffect(() => {
-    const validateToken = async () => {
+    const initialize = async () => {
+      // Validate token if exists
       if (token && !isAuthenticated) {
         try {
           // Verify token is still valid by fetching current user
@@ -34,9 +39,28 @@ function App() {
         }
       }
       setIsInitializing(false);
+
+      // Start checking backend health in background
+      // This will warm up the backend even if user is on landing page
+      checkBackendHealth();
     };
 
-    validateToken();
+    const checkBackendHealth = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/health`, {
+          method: 'GET',
+          signal: AbortSignal.timeout(5000),
+        });
+
+        if (response.ok) {
+          setIsBackendReady(true);
+        }
+      } catch (error) {
+        // Backend not ready, BackendLoadingScreen will handle polling
+      }
+    };
+
+    initialize();
   }, []);
 
   // Show loading screen while validating token
@@ -45,6 +69,13 @@ function App() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <p className="text-gray-500">Loading...</p>
       </div>
+    );
+  }
+
+  // Show backend loading screen on all routes except landing page
+  if (!isBackendReady && !isOnLandingPage) {
+    return (
+      <BackendLoadingScreen onBackendReady={() => setIsBackendReady(true)} />
     );
   }
 
