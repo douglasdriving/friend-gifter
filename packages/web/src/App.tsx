@@ -28,7 +28,8 @@ function App() {
   useEffect(() => {
     const checkBackendHealth = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/health`, {
+        const apiUrl = import.meta.env.VITE_API_URL || '/api/v1';
+        const response = await fetch(`${apiUrl}/health`, {
           method: 'GET',
           signal: AbortSignal.timeout(5000),
         });
