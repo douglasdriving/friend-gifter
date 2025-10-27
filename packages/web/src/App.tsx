@@ -19,32 +19,13 @@ import BackendLoadingScreen from './components/BackendLoadingScreen';
 
 function App() {
   const { isAuthenticated, token, setAuth, clearAuth } = useAuthStore();
-  const [isInitializing, setIsInitializing] = useState(true);
   const [isBackendReady, setIsBackendReady] = useState(false);
+  const [checkingBackend, setCheckingBackend] = useState(true);
   const location = useLocation();
   const isOnLandingPage = location.pathname === '/';
 
-  // Auto-login: Validate stored token and check backend health on app mount
+  // Check backend health on app mount
   useEffect(() => {
-    const initialize = async () => {
-      // Validate token if exists
-      if (token && !isAuthenticated) {
-        try {
-          // Verify token is still valid by fetching current user
-          const user = await authService.getCurrentUser();
-          setAuth(user, token);
-        } catch (error) {
-          // Token is invalid, clear auth
-          clearAuth();
-        }
-      }
-      setIsInitializing(false);
-
-      // Start checking backend health in background
-      // This will warm up the backend even if user is on landing page
-      checkBackendHealth();
-    };
-
     const checkBackendHealth = async () => {
       try {
         const response = await fetch(`${import.meta.env.VITE_API_URL}/health`, {
@@ -57,23 +38,35 @@ function App() {
         }
       } catch (error) {
         // Backend not ready, BackendLoadingScreen will handle polling
+      } finally {
+        setCheckingBackend(false);
       }
     };
 
-    initialize();
+    checkBackendHealth();
   }, []);
 
-  // Show loading screen while validating token
-  if (isInitializing) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-500">Loading...</p>
-      </div>
-    );
-  }
+  // Validate token once backend is ready
+  useEffect(() => {
+    const validateToken = async () => {
+      if (isBackendReady && token && !isAuthenticated) {
+        try {
+          // Verify token is still valid by fetching current user
+          const user = await authService.getCurrentUser();
+          setAuth(user, token);
+        } catch (error) {
+          // Token is invalid, clear auth
+          clearAuth();
+        }
+      }
+    };
+
+    validateToken();
+  }, [isBackendReady, token, isAuthenticated]);
 
   // Show backend loading screen on all routes except landing page
-  if (!isBackendReady && !isOnLandingPage) {
+  // Wait for initial backend check to complete before proceeding
+  if ((checkingBackend || !isBackendReady) && !isOnLandingPage) {
     return (
       <BackendLoadingScreen onBackendReady={() => setIsBackendReady(true)} />
     );
